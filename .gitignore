@@ -22,3 +22,23 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Izinkan folder storage masuk ke git (dibutuhkan Railway)
+!/storage
+!/storage/app
+!/storage/app/.gitkeep
+!/storage/app/public
+!/storage/app/public/.gitkeep
+!/storage/framework
+!/storage/framework/cache
+!/storage/framework/cache/data
+!/storage/framework/cache/data/.gitkeep
+!/storage/framework/sessions
+!/storage/framework/sessions/.gitkeep
+!/storage/framework/views
+!/storage/framework/views/.gitkeep
+!/storage/logs
+!/storage/logs/.gitkeep
+!/bootstrap/cache
+!/bootstrap/cache/.gitkeep
+
