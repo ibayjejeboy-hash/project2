@@ -12,7 +12,7 @@
         {{-- OVERLAY GRADIENT HALUS --}}
         <div class="absolute inset-0 
             bg-gradient-to-r 
-            from-black/70 
+            from-black/65
             via-black/40 
             to-gray-100">
         </div>
