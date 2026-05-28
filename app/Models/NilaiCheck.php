@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class NilaiCheck extends Model
+{
+    protected $fillable = [
+        'siswa_id',
+        'nilai_id',
+        'indikator_id',
+        'nilai',
+        'kategori'
+    ];
+}
