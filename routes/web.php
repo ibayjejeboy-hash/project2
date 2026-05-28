@@ -77,10 +77,6 @@ Route::put(
 
 });
 
-Route::get('/', function () {
-    return redirect()->route('home');
-});
-
     // route galeri
 Route::get('/admin/galeri', [GaleriController::class, 'index'])->name('admin.galeri');
 Route::post('/admin/galeri', [GaleriController::class, 'store'])->name('admin.galeri.store');
