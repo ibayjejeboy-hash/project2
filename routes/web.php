@@ -77,12 +77,10 @@ Route::put(
 
 });
 
-Route::get('/test', function () {
-    return 'OK';
-});
+
 
 Route::get('/', function () {
-    return 'WEB HIDUP 🔥';
+    return redirect()->route('login');
 });
 
     // route galeri
