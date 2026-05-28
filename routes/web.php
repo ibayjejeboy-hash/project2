@@ -77,8 +77,6 @@ Route::put(
 
 });
 
-
-
 Route::get('/', function () {
     return redirect()->route('login');
 });
