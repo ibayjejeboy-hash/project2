@@ -2,25 +2,22 @@
 set_time_limit(10);
 
 $host = getenv('DB_HOST');
-$port = getenv('DB_PORT');
+$port = (int)getenv('DB_PORT');
 $db   = getenv('DB_DATABASE');
 $user = getenv('DB_USERNAME');
 $pass = getenv('DB_PASSWORD');
 
-echo "PASS length: " . strlen($pass) . " chars<br><br>";
+echo "Konek ke $host:$port...<br>";
+flush();
 
-try {
-    $pdo = new PDO(
-        "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4",
-        $user, $pass,
-        [
-            PDO::ATTR_TIMEOUT                      => 5,
-            PDO::ATTR_CONNECT_TIMEOUT              => 5,
-            PDO::ATTR_ERRMODE                      => PDO::ERRMODE_EXCEPTION,
-            PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
-        ]
-    );
-    echo "✅ KONEK BERHASIL!";
-} catch (Exception $e) {
-    echo "❌ GAGAL: " . $e->getMessage();
+mysqli_report(MYSQLI_REPORT_OFF);
+$mysqli = mysqli_init();
+mysqli_options($mysqli, MYSQLI_OPT_CONNECT_TIMEOUT, 5);
+$conn = mysqli_real_connect($mysqli, $host, $user, $pass, $db, $port);
+
+if (!$conn) {
+    echo "❌ GAGAL: " . mysqli_connect_error();
+} else {
+    echo "✅ BERHASIL!";
+    mysqli_close($mysqli);
 }
