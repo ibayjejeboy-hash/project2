@@ -77,6 +77,13 @@ Route::put(
 
 });
 
+Route::get('/test', function () {
+    return 'OK';
+});
+
+Route::get('/', function () {
+    return 'WEB HIDUP 🔥';
+});
 
     // route galeri
 Route::get('/admin/galeri', [GaleriController::class, 'index'])->name('admin.galeri');
