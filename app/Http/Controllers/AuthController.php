@@ -18,6 +18,8 @@ class AuthController extends Controller
 public function authenticate(Request $request)
 {
     if (Auth::attempt($request->only('email','password')))
+
+          dd($credentials, Auth::attempt($credentials));
     {
         $user = Auth::user();
 
