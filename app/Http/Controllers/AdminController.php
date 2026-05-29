@@ -63,35 +63,37 @@ public function storeUser(Request $request)
 
 public function authenticate(Request $request)
 {
-    if (Auth::attempt($request->only('email','password')))
+    $credentials = $request->only('email','password');
+
+    dd($credentials, Auth::attempt($credentials)); // 👈 TAMBAH INI
+
+    if (Auth::attempt($credentials))
     {
         $user = Auth::user();
 
-        // 👨‍🏫 GURU
+        if ($user->role == 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
         if ($user->role == 'guru') {
             return redirect()->route('erapor.dashboard');
         }
 
-        // 🧑‍🎓 SISWA
         if ($user->role == 'siswa') {
 
             $siswa = Siswa::where('user_id', $user->id)->first();
 
             if ($siswa) {
-                return redirect('/siswa/dashboard/' . $siswa->id);
+                return redirect()->route('siswa.dashboard', ['id' => $siswa->id]);
             } else {
                 return back()->with('error','Data siswa tidak ditemukan');
             }
-        }
-
-        // 👑 ADMIN (optional)
-        if ($user->role == 'admin') {
-            return redirect()->route('admin.dashboard');
         }
     }
 
     return back()->with('error','Login gagal');
 }
+
 
 public function createUser($id)
 {
