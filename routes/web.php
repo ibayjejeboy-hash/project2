@@ -77,6 +77,11 @@ Route::put(
 
 });
 
+Route::get('/test-session', function () {
+    session(['test' => 'berhasil']);
+    return session('test');
+});
+
     // route galeri
 Route::get('/admin/galeri', [GaleriController::class, 'index'])->name('admin.galeri');
 Route::post('/admin/galeri', [GaleriController::class, 'store'])->name('admin.galeri.store');
