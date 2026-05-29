@@ -17,41 +17,28 @@ class AuthController extends Controller
 
 public function authenticate(Request $request)
 {
-    if (Auth::attempt($request->only('email','password')))
+    $credentials = $request->only('email','password');
 
-          dd($credentials, Auth::attempt($credentials));
+    dd($credentials, Auth::attempt($credentials)); // 👈 TAMBAH INI
+
+    if (Auth::attempt($credentials))
     {
         $user = Auth::user();
 
-        // 👑 ADMIN
         if ($user->role == 'admin') {
             return redirect()->route('admin.dashboard');
         }
 
-        // 👨‍🏫 GURU
         if ($user->role == 'guru') {
             return redirect()->route('erapor.dashboard');
         }
 
-        // 🧑‍🎓 SISWA
         if ($user->role == 'siswa') {
 
             $siswa = Siswa::where('user_id', $user->id)->first();
 
             if ($siswa) {
-                if (auth()->user()->role == 'admin') {
-
-                    return redirect()->route('admin.dashboard');
-
-                } elseif (auth()->user()->role == 'guru') {
-
-                    return redirect()->route('erapor.dashboard');
-
-                } else {
-
-                    return redirect()->route('siswa.dashboard', ['id' => $siswa->id]);
-
-                }
+                return redirect()->route('siswa.dashboard', ['id' => $siswa->id]);
             } else {
                 return back()->with('error','Data siswa tidak ditemukan');
             }
