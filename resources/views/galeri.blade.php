@@ -3,24 +3,33 @@
 @section('content')
 
 {{-- ================= HEADER ================= --}}
-<section class="bg-gradient-to-r from-lime-300 to-green-500">
-    <div class="flex justify-between items-center px-4 md:px-16 py-4 md:py-6">
+<header class="w-full bg-white/70 backdrop-blur-md border-b border-green-100 sticky top-0 z-50 transition duration-300">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
 
-        <div class="flex items-center gap-4">
-           <img src="{{ asset('assets/images/1001230752.jpg - Edited.png') }}" class="w-12 md:w-16">
-        </div>
+        {{-- Logo --}}
+        <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+            <img src="{{ asset('assets/images/1001230752.jpg - Edited.png') }}" class="w-12 h-12 object-contain group-hover:scale-105 transition duration-300">
+            <div>
+                <span class="block font-black text-green-800 text-lg tracking-wider">AL MUSYAFFALLAH</span>
+                <span class="block text-xxs font-semibold text-green-600 uppercase tracking-widest -mt-1">Raudhatul Athfal</span>
+            </div>
+        </a>
 
         {{-- Desktop Menu --}}
-        <ul class="hidden md:flex gap-8 lg:gap-12 font-extrabold text-lg tracking-wide">
-            <li><a href="{{ route('home') }}" class="hover:text-white">HOME</a></li>
-            <li><a href="{{ route('galeri') }}" class="text-white">GALERI</a></li>
-            <li><a href="{{ route('pendaftaran') }}" class="hover:text-white">PENDAFTARAN</a></li>
-            <li><a href="{{ route('erapor') }}" class="hover:text-white">E - RAPOR</a></li>
+        <ul class="hidden md:flex gap-8 lg:gap-12 font-extrabold text-sm tracking-wide text-gray-700 items-center">
+            <li><a href="{{ route('home') }}" class="hover:text-green-600 transition">HOME</a></li>
+            <li><a href="{{ route('galeri') }}" class="text-green-600 hover:text-green-800 transition">GALERI</a></li>
+            <li><a href="{{ route('pendaftaran') }}" class="hover:text-green-600 transition">PENDAFTARAN</a></li>
+            <li>
+                <a href="{{ route('erapor') }}" class="inline-flex items-center gap-1.5 px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-sm hover:shadow-md transition">
+                    E-RAPOR
+                </a>
+            </li>
         </ul>
 
         {{-- Hamburger (Mobile) --}}
-        <button class="md:hidden text-gray-800 focus:outline-none" onclick="toggleGaleriMenu()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <button class="md:hidden text-gray-700 hover:text-green-600 focus:outline-none p-1.5 hover:bg-gray-100 rounded-lg transition" onclick="toggleGaleriMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
         </button>
@@ -28,41 +37,43 @@
     </div>
 
     {{-- Mobile Menu --}}
-    <div id="galeri-mobile-menu" class="hidden md:hidden bg-green-500 px-4 pb-4 space-y-2 font-extrabold text-base">
-        <a href="{{ route('home') }}" class="block py-2 text-white border-b border-green-400">HOME</a>
-        <a href="{{ route('galeri') }}" class="block py-2 text-white border-b border-green-400">GALERI</a>
-        <a href="{{ route('pendaftaran') }}" class="block py-2 text-white border-b border-green-400">PENDAFTARAN</a>
-        <a href="{{ route('erapor') }}" class="block py-2 text-white">E - RAPOR</a>
+    <div id="galeri-mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md px-6 py-4 space-y-3 font-extrabold text-sm border-t border-green-50 shadow-lg">
+        <a href="{{ route('home') }}" class="block py-2 text-gray-700 hover:text-green-600 border-b border-gray-100">HOME</a>
+        <a href="{{ route('galeri') }}" class="block py-2 text-green-600 hover:text-green-800 border-b border-gray-100">GALERI</a>
+        <a href="{{ route('pendaftaran') }}" class="block py-2 text-gray-700 hover:text-green-600 border-b border-gray-100">PENDAFTARAN</a>
+        <a href="{{ route('erapor') }}" class="block py-2.5 text-center bg-green-600 text-white rounded-xl shadow-sm">E-RAPOR</a>
     </div>
-</section>
+</header>
 
 
 {{-- ================= CONTENT ================= --}}
-<section class="bg-gray-200 min-h-screen px-4 md:px-16 py-7">
+<section class="bg-gray-50 min-h-screen px-6 py-12 md:px-16">
 
-    <div class="text-center mb-8">
-        <h1 class="text-3xl md:text-5xl font-extrabold">GALERI</h1>
-        <h2 class="text-2xl md:text-4xl font-bold">RA AL-MUSYAFFALLAH</h2>
+    <div class="text-center mb-12">
+        <span class="text-xs font-extrabold text-green-600 uppercase tracking-widest">Klip Aktivitas</span>
+        <h1 class="text-3xl md:text-5xl font-black text-gray-900 mt-2">GALERI KEGIATAN</h1>
+        <div class="w-12 h-1 bg-green-600 mx-auto rounded-full mt-4"></div>
     </div>
 
     {{-- GRID GALERI --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-16">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
 
-    @foreach($galeris as $item)
-    <div class="bg-white p-4 md:p-6 shadow-xl rounded-xl hover:scale-105 transition duration-300">
+        @foreach($galeris as $item)
+        <div class="bg-white p-4 shadow-sm border border-gray-100 rounded-2xl hover:shadow-md hover:scale-102 transition duration-300 group">
 
-        <img src="{{ asset('storage/'.$item->gambar) }}"
-             onclick="openModal(this.src)"
-             class="cursor-pointer w-full h-[200px] object-cover rounded-lg">
+            <div class="overflow-hidden rounded-xl h-56 relative">
+                <img src="{{ asset('storage/'.$item->gambar) }}"
+                     onclick="openModal(this.src)"
+                     class="cursor-zoom-in w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 pointer-events-none transition duration-300"></div>
+            </div>
 
-        <p class="text-center mt-3 font-bold">
-            {{ $item->judul }}
-        </p>
+            <p class="text-center mt-4 font-bold text-gray-800 group-hover:text-green-700 transition">
+                {{ $item->judul }}
+            </p>
 
-    </div>
-    @endforeach
-
-</div>
+        </div>
+        @endforeach
 
     </div>
 
@@ -71,12 +82,12 @@
 
 {{-- ================= MODAL IMAGE ================= --}}
 <div id="imageModal"
-     class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+     class="hidden fixed inset-0 bg-black/95 backdrop-blur-sm flex items-center justify-center z-50 p-4 transition duration-300">
 
-    <span onclick="closeModal()"
-          class="absolute top-6 right-10 text-white text-4xl cursor-pointer">&times;</span>
+    <button onclick="closeModal()"
+          class="absolute top-6 right-6 text-white hover:text-green-400 text-4xl font-bold cursor-pointer transition p-2 bg-white/10 hover:bg-white/20 rounded-full w-12 h-12 flex items-center justify-center">&times;</button>
 
-    <img id="modalImage" class="max-w-full md:max-w-4xl max-h-[80vh] rounded-xl shadow-2xl">
+    <img id="modalImage" class="max-w-full md:max-w-5xl max-h-[85vh] rounded-2xl shadow-2xl border-4 border-white/10">
 
 </div>
 
@@ -85,10 +96,12 @@
 function openModal(src) {
     document.getElementById('modalImage').src = src;
     document.getElementById('imageModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
     document.getElementById('imageModal').classList.add('hidden');
+    document.body.style.overflow = '';
 }
 
 function toggleGaleriMenu() {

@@ -163,12 +163,16 @@
 
 <script>
 function openSidebar() {
-    document.getElementById('sidebar').style.transform = 'translateX(0)';
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.remove('-translate-x-full');
+    sidebar.classList.add('translate-x-0');
     document.getElementById('sidebar-overlay').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
 }
 function closeSidebar() {
-    document.getElementById('sidebar').style.transform = 'translateX(-100%)';
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.remove('translate-x-0');
+    sidebar.classList.add('-translate-x-full');
     document.getElementById('sidebar-overlay').classList.add('hidden');
     document.body.style.overflow = '';
 }

@@ -205,17 +205,35 @@ public function update(Request $request, $id)
     );
 
     // UPDATE P5
-    foreach ($request->p5 as $indikator_id => $nilai) {
-        NilaiCheck::updateOrCreate(
-            [
-                'siswa_id' => $id,
-                'indikator_id' => $indikator_id
-            ],
-            [
-                'nilai' => $nilai,
-                'kategori' => 'p5'
-            ]
-        );
+    if ($request->p5) {
+        foreach ($request->p5 as $indikator_id => $nilai) {
+            NilaiCheck::updateOrCreate(
+                [
+                    'siswa_id' => $id,
+                    'indikator_id' => $indikator_id
+                ],
+                [
+                    'nilai' => $nilai,
+                    'kategori' => 'p5'
+                ]
+            );
+        }
+    }
+
+    // UPDATE Profil PPRA
+    if ($request->profil) {
+        foreach ($request->profil as $indikator_id => $nilai) {
+            NilaiCheck::updateOrCreate(
+                [
+                    'siswa_id' => $id,
+                    'indikator_id' => $indikator_id
+                ],
+                [
+                    'nilai' => $nilai,
+                    'kategori' => 'profil'
+                ]
+            );
+        }
     }
 
     return redirect()->route('erapor.hasil', $id)
