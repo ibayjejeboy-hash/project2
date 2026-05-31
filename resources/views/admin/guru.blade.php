@@ -57,7 +57,8 @@
 
     <h3 class="text-lg font-semibold mb-4">Daftar Guru</h3>
 
-    <table class="w-full text-sm border">
+    <div class="overflow-x-auto">
+    <table class="w-full text-sm border min-w-[500px]">
         <thead>
             <tr class="bg-gray-200 text-center">
                 <th class="p-2 border">No</th>
@@ -80,6 +81,7 @@
             @endforeach
         </tbody>
     </table>
+    </div>
 
 </div>
 

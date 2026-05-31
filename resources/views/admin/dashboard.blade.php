@@ -6,7 +6,7 @@
     Dashboard Admin
 </h1>
 
-<div class="grid grid-cols-3 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
     <div class="bg-gradient-to-r from-green-400 to-lime-500 text-white p-6 rounded-2xl shadow-lg">
     <div class="flex items-center justify-between">

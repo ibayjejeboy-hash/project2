@@ -371,7 +371,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 {{-- TABLE --}}
-<table class="w-full bg-white rounded-xl shadow">
+<div class="overflow-x-auto mt-6">
+<table class="w-full bg-white rounded-xl shadow min-w-[600px]">
 <tr class="bg-gray-200">
 <th class="p-2">Nama</th>
 <th>NIS</th>
@@ -434,5 +435,6 @@ document.addEventListener("DOMContentLoaded", function () {
 @endforeach
 
 </table>
+</div>
 
 @endsection

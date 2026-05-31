@@ -36,7 +36,7 @@
         {{-- RIGHT FORM --}}
         <div class="w-full md:w-1/2 flex items-center justify-center">
 
-            <div class="bg-white/90 backdrop-blur-md w-[420px] rounded-2xl shadow-2xl p-10">
+            <div class="bg-white/90 backdrop-blur-md w-full max-w-[420px] rounded-2xl shadow-2xl p-6 md:p-10">
 
                 <h2 class="text-3xl font-extrabold text-center mb-6 text-gray-800">
                     Login
