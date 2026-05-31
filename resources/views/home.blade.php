@@ -14,7 +14,7 @@
                 <img src="{{ asset('assets/images/1001230752.jpg - Edited.png') }}" class="w-12 h-12 object-contain group-hover:scale-105 transition duration-300">
                 <div>
                     <span class="block font-black text-green-800 text-lg tracking-wider">AL MUSYAFFALLAH</span>
-                    <span class="block text-xxs font-semibold text-green-600 uppercase tracking-widest -mt-1">Raudhatul Athfal</span>
+                    <span class="block text-xs font-semibold text-green-600 uppercase tracking-widest -mt-1">Raudhatul Athfal</span>
                 </div>
             </a>
 
