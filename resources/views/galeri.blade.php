@@ -5,13 +5,12 @@
 {{-- ================= HEADER ================= --}}
 <header class="w-full bg-white/70 backdrop-blur-md border-b border-green-100 sticky top-0 z-50 transition duration-300">
     <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-
         {{-- Logo --}}
         <a href="{{ route('home') }}" class="flex items-center gap-3 group">
             <img src="{{ asset('assets/images/1001230752.jpg - Edited.png') }}" class="w-12 h-12 object-contain group-hover:scale-105 transition duration-300">
             <div>
                 <span class="block font-black text-green-800 text-lg tracking-wider">AL MUSYAFFALLAH</span>
-                <span class="block text-xxs font-semibold text-green-600 uppercase tracking-widest -mt-1">Raudhatul Athfal</span>
+                <span class="block text-xs font-semibold text-green-600 uppercase tracking-widest -mt-1">Raudhatul Athfal</span>
             </div>
         </a>
 
