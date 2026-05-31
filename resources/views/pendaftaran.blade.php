@@ -2,25 +2,34 @@
 
 @section('content')
 
-{{-- ================= HEADER ================= --}}
-<section class="bg-gradient-to-r from-lime-300 to-green-500">
-    <div class="flex justify-between items-center px-4 md:px-16 py-4 md:py-6">
+{{-- ================= HEADER (SAMA KAYA GALERI) ================= --}}
+<header class="w-full bg-white/70 backdrop-blur-md border-b border-green-100 sticky top-0 z-50 transition duration-300">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
 
-        <div class="flex items-center gap-4">
-            <img src="{{ asset('assets/images/1001230752.jpg - Edited.png') }}" class="w-12 md:w-16">
-        </div>
+        {{-- Logo --}}
+        <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+            <img src="{{ asset('assets/images/1001230752.jpg - Edited.png') }}" class="w-12 h-12 object-contain group-hover:scale-105 transition duration-300">
+            <div>
+                <span class="block font-black text-green-800 text-lg tracking-wider">AL MUSYAFFALLAH</span>
+                <span class="block text-xs font-semibold text-green-600 uppercase tracking-widest -mt-1">Raudhatul Athfal</span>
+            </div>
+        </a>
 
         {{-- Desktop Menu --}}
-        <ul class="hidden md:flex gap-8 lg:gap-12 font-extrabold text-lg tracking-wide">
-            <li><a href="{{ route('home') }}" class="hover:text-white">HOME</a></li>
-            <li><a href="{{ route('galeri') }}" class="hover:text-white">GALERI</a></li>
-            <li><a href="{{ route('pendaftaran') }}" class="text-white">PENDAFTARAN</a></li>
-            <li><a href="{{ route('erapor') }}" class="hover:text-white">E - RAPOR</a></li>
+        <ul class="hidden md:flex gap-8 lg:gap-12 font-extrabold text-sm tracking-wide text-gray-700 items-center">
+            <li><a href="{{ route('home') }}" class="hover:text-green-600 transition">HOME</a></li>
+            <li><a href="{{ route('galeri') }}" class="hover:text-green-600 transition">GALERI</a></li>
+            <li><a href="{{ route('pendaftaran') }}" class="text-green-600">PENDAFTARAN</a></li>
+            <li>
+                <a href="{{ route('erapor') }}" class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-sm transition">
+                    E-RAPOR
+                </a>
+            </li>
         </ul>
 
-        {{-- Hamburger (Mobile) --}}
-        <button class="md:hidden text-gray-800 focus:outline-none" onclick="togglePendaftaranMenu()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        {{-- Hamburger --}}
+        <button class="md:hidden text-gray-700" onclick="toggleMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
         </button>
@@ -28,71 +37,67 @@
     </div>
 
     {{-- Mobile Menu --}}
-    <div id="pendaftaran-mobile-menu" class="hidden md:hidden bg-green-500 px-4 pb-4 space-y-2 font-extrabold text-base">
-        <a href="{{ route('home') }}" class="block py-2 text-white border-b border-green-400">HOME</a>
-        <a href="{{ route('galeri') }}" class="block py-2 text-white border-b border-green-400">GALERI</a>
-        <a href="{{ route('pendaftaran') }}" class="block py-2 text-white border-b border-green-400">PENDAFTARAN</a>
-        <a href="{{ route('erapor') }}" class="block py-2 text-white">E - RAPOR</a>
+    <div id="mobile-menu" class="hidden md:hidden bg-white px-6 py-4 space-y-3 text-sm font-bold border-t">
+        <a href="{{ route('home') }}" class="block">HOME</a>
+        <a href="{{ route('galeri') }}" class="block">GALERI</a>
+        <a href="{{ route('pendaftaran') }}" class="block text-green-600">PENDAFTARAN</a>
+        <a href="{{ route('erapor') }}" class="block bg-green-600 text-white text-center py-2 rounded-lg">E-RAPOR</a>
     </div>
-</section>
+</header>
 
 
 {{-- ================= CONTENT ================= --}}
-<section class="bg-gray-200 min-h-screen px-4 md:px-16 py-7">
+<section class="bg-gray-50 min-h-screen px-6 py-12 md:px-16">
 
     {{-- Judul --}}
-    <div class="text-center mb-8 md:mb-10">
-        <h1 class="text-3xl md:text-5xl font-extrabold mb-3 md:mb-4">PENDAFTARAN</h1>
-        <h2 class="text-xl md:text-4xl font-bold">
-            Peserta Didik Baru Tahun Ajaran 2026/2027
-        </h2>
+    <div class="text-center mb-12">
+        <span class="text-xs font-extrabold text-green-600 uppercase tracking-widest">PPDB</span>
+        <h1 class="text-3xl md:text-5xl font-black text-gray-900 mt-2">
+            PENDAFTARAN SISWA BARU
+        </h1>
+        <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
+            Tahun Ajaran 2026/2027
+        </p>
+        <div class="w-12 h-1 bg-green-600 mx-auto rounded-full mt-4"></div>
     </div>
 
     {{-- Deskripsi --}}
-    <div class="max-w-5xl mx-auto text-center text-base md:text-xl font-semibold mb-10 md:mb-20">
-        Kami mengumumkan pembukaan penerimaan siswa baru untuk tahun ajaran 2025/2026.
-        Kami mengundang para calon siswa yang berminat untuk bergabung dan menempuh
-        pendidikan di Sekolah kami. Jangan lewatkan kesempatan ini untuk bergabung
-        dengan komunitas belajar yang berkualitas Sekolah kami. Jadilah bagian dari
-        perjalanan pendidikan yang unggul dan bermakna!
+    <div class="max-w-4xl mx-auto text-center text-gray-700 font-medium mb-16 leading-relaxed">
+        Kami membuka kesempatan bagi calon peserta didik untuk bergabung bersama kami.
+        Jadilah bagian dari lingkungan belajar yang unggul, islami, dan menyenangkan.
     </div>
 
     {{-- Card Section --}}
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
 
-        {{-- Card 1 --}}
-        <div class="bg-green-500 p-6 md:p-8 rounded-lg shadow-xl text-center hover:scale-105 transition duration-300">
-            <h3 class="text-xl md:text-2xl font-extrabold mb-3 md:mb-4">ALUR PENDAFTARAN</h3>
-            <p class="text-base md:text-lg mb-4 md:mb-6">
-                Informasi mengenai alur pendaftaran sistem PPDB online
-                silahkan pelajari terlebih dahulu.
+        {{-- Card --}}
+        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition duration-300 text-center">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">ALUR PENDAFTARAN</h3>
+            <p class="text-gray-600 mb-6">
+                Pelajari langkah-langkah pendaftaran sebelum melakukan registrasi.
             </p>
-            <button class="bg-green-200 px-6 py-2 rounded-full font-bold hover:bg-white transition">
-                SELENGKAPNYA
+            <button class="bg-green-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 transition">
+                Selengkapnya
             </button>
         </div>
 
-        {{-- Card 2 --}}
-        <div class="bg-green-500 p-6 md:p-8 rounded-lg shadow-xl text-center hover:scale-105 transition duration-300">
-            <h3 class="text-xl md:text-2xl font-extrabold mb-3 md:mb-4">SYARAT PENDAFTARAN</h3>
-            <p class="text-base md:text-lg mb-6 md:mb-12">
-                Berikut ini adalah syarat dan ketentuan yang harus dipenuhi
-                oleh calon pendaftar.
+        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition duration-300 text-center">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">SYARAT PENDAFTARAN</h3>
+            <p class="text-gray-600 mb-6">
+                Ketahui syarat dan ketentuan yang harus dipenuhi oleh calon siswa.
             </p>
-            <button class="bg-green-200 px-6 py-2 rounded-full font-bold hover:bg-white transition">
-                SELENGKAPNYA
+            <button class="bg-green-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 transition">
+                Selengkapnya
             </button>
         </div>
 
-        {{-- Card 3 --}}
-        <div class="bg-green-500 p-6 md:p-8 rounded-lg shadow-xl text-center hover:scale-105 transition duration-300">
-            <h3 class="text-xl md:text-2xl font-extrabold mb-3 md:mb-4">PANDUAN PENDAFTARAN</h3>
-            <p class="text-base md:text-lg mb-4 md:mb-6">
-                Untuk mendapat informasi yang lebih lengkap panduan
-                penggunaan PPDB Online.
+        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition duration-300 text-center">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">PANDUAN PENDAFTARAN</h3>
+            <p class="text-gray-600 mb-6">
+                Panduan lengkap penggunaan sistem PPDB online.
             </p>
-            <button class="bg-green-200 px-6 py-2 rounded-full font-bold hover:bg-white transition">
-                SELENGKAPNYA
+            <button class="bg-green-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 transition">
+                Selengkapnya
             </button>
         </div>
 
@@ -100,10 +105,10 @@
 
 </section>
 
+
 <script>
-function togglePendaftaranMenu() {
-    const menu = document.getElementById('pendaftaran-mobile-menu');
-    menu.classList.toggle('hidden');
+function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
 }
 </script>
 
