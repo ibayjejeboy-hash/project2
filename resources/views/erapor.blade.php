@@ -69,14 +69,6 @@
                      class="w-40 mx-auto drop-shadow-xl hover:scale-105 transition duration-300">
             </a>
 
-            <h2 class="mt-6 text-xl font-bold text-gray-800">
-                Masuk ke Sistem E-Rapor
-            </h2>
-
-            <p class="text-gray-500 mt-2 mb-6">
-                Klik logo di atas untuk login sebagai admin / guru
-            </p>
-
             {{-- Button alternatif --}}
             <a href="{{ route('admin.login') }}"
                class="inline-block bg-green-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 transition">
