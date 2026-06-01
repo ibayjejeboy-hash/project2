@@ -77,7 +77,7 @@
                 Pelajari langkah-langkah pendaftaran sebelum melakukan registrasi.
             </p>
             <a href="{{ route('pendaftaran.alur') }}"
-   class="inline-block bg-green-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 transition">
+   class="bg-green-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 transition">
     Selengkapnya
 </a>
 

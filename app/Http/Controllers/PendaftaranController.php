@@ -21,4 +21,12 @@ class PendaftaranController extends Controller
 
         return back()->with('success', 'Pendaftaran berhasil!');
     }
+
+    public function index()
+{
+    $data = DB::table('pendaftaran')->latest()->get();
+
+    return view('admin.pendaftaran.index', compact('data'));
+}
+
 }

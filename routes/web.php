@@ -34,6 +34,9 @@ Route::get('/pendaftaran', function () {
     return view('pendaftaran');
 })->name('pendaftaran');
 
+Route::get('/admin/pendaftaran', [PendaftaranController::class, 'index'])
+    ->name('admin.pendaftaran');
+
 
     // route admin
 Route::get('/admin/login', [AdminController::class, 'login'])

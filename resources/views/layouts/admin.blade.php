@@ -65,7 +65,7 @@
             </a>
 
             {{-- Pendaftaran --}}
-            <a href="#"
+            <a href="{{ route('admin.pendaftaran') }}"
                class="flex items-center gap-3 p-3 rounded-xl hover:bg-white hover:text-green-600 transition duration-300 group">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
