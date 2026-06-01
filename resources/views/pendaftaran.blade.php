@@ -76,10 +76,10 @@
             <p class="text-gray-600 mb-6">
                 Pelajari langkah-langkah pendaftaran sebelum melakukan registrasi.
             </p>
-            <button class="bg-green-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 transition">
-                Selengkapnya
-            </button>
-        </div>
+            <a href="{{ route('pendaftaran.alur') }}"
+   class="inline-block bg-green-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 transition">
+    Selengkapnya
+</a>
 
         <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition duration-300 text-center">
             <h3 class="text-xl font-bold text-gray-800 mb-3">SYARAT PENDAFTARAN</h3>

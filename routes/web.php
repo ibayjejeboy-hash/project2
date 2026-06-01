@@ -12,6 +12,8 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PendaftaranController;
+
 
 
 
@@ -143,3 +145,15 @@ Route::post('/admin/guru', [GuruController::class, 'store'])->name('admin.guru.s
     Route::get('/api/provinsi', [WilayahController::class, 'provinsi']);
 Route::get('/api/kabupaten/{id}', [WilayahController::class, 'kabupaten']);
 Route::get('/api/kecamatan/{id}', [WilayahController::class, 'kecamatan']);
+
+    //pendaftaran
+    Route::get('/pendaftaran/alur', function () {
+    return view('pendaftaran.alur');
+})->name('pendaftaran.alur');
+
+Route::get('/pendaftaran/form', function () {
+    return view('pendaftaran.form');
+})->name('pendaftaran.form');
+
+Route::post('/pendaftaran/store', [PendaftaranController::class, 'store'])
+    ->name('pendaftaran.store');
