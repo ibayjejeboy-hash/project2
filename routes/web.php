@@ -13,8 +13,19 @@ use App\Http\Controllers\GuruController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PendaftaranController;
+use Illuminate\Support\Facades\Storage;
 
+// Route untuk serve file storage (fix untuk Railway + php artisan serve)
+Route::get('/storage/{path}', function ($path) {
+    $fullPath = storage_path('app/public/' . $path);
 
+    if (!file_exists($fullPath)) {
+        abort(404);
+    }
+
+    $mimeType = mime_content_type($fullPath);
+    return response()->file($fullPath, ['Content-Type' => $mimeType]);
+})->where('path', '.*')->name('storage.serve');
 
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
