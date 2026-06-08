@@ -16,21 +16,9 @@ class GaleriController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-        'judul' => 'required',
-        'gambar' => 'required|image|mimes:jpg,jpeg,png|max:20480'
-    ]);
+       $path = $request->file('gambar')->store('galeri', 'public');
 
-    $path = $request->file('gambar')->store('galeri', 'public');
-
-    dd($path);
-
-    Galeri::create([
-        'judul' => $request->judul,
-        'gambar' => $path
-    ]);
-
-        return redirect()->back()->with('success', 'Galeri berhasil ditambahkan!');
+dd($path);
     }
 
     public function update(Request $request, $id)
