@@ -23,9 +23,7 @@
         <input type="file" name="gambar" class="w-full border p-2 rounded" required>
     </div>
 
-    <button class="bg-green-600 text-white px-4 py-2 rounded">
-        Simpan
-    </button>
+      <button type="submit">Simpan</button>
 </form>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
