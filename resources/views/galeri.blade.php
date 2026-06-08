@@ -61,8 +61,8 @@
         <div class="bg-white p-4 shadow-sm border border-gray-100 rounded-2xl hover:shadow-md hover:scale-102 transition duration-300 group">
 
             <div class="overflow-hidden rounded-xl h-56 relative">
-                <img src="{{ asset('storage/'.$item->gambar) }}"
-                     onclick="openModal(this.src)"
+               <img src="{{ asset('storage/' . $item->gambar) }}"
+                     alt="{{ $item->judul }}"
                      class="cursor-zoom-in w-full h-full object-cover group-hover:scale-105 transition duration-500">
                 <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 pointer-events-none transition duration-300"></div>
             </div>
