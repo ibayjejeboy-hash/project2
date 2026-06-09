@@ -25,11 +25,21 @@ class EraporController extends Controller
 {
     $user = auth()->user();
 
-    // ambil kelas yang dia pegang
-    $kelas = Kelas::where('wali_kelas_id', $user->id)->first();
+    if ($user->role == 'admin') {
+        // Admin bisa menginput nilai untuk semua siswa
+        $siswas = Siswa::all();
+    } else {
+        // ambil kelas yang dia pegang
+        $kelas = Kelas::where('wali_kelas_id', $user->id)->first();
 
-    // ambil siswa berdasarkan kelas itu
-    $siswas = Siswa::where('kelas_id', $kelas->id ?? null)->get();
+        if ($kelas) {
+            // ambil siswa berdasarkan kelas itu
+            $siswas = Siswa::where('kelas_id', $kelas->id)->get();
+        } else {
+            // jika guru tidak/belum ditugaskan kelas, tampilkan semua siswa agar daftar tidak kosong
+            $siswas = Siswa::all();
+        }
+    }
 
     // indikator
     $indikatorP5 = Indikator::where('kategori', 'p5')->get();
@@ -47,15 +57,19 @@ class EraporController extends Controller
 {
      $user = auth()->user();
 
-    $kelas = Kelas::where('wali_kelas_id', $user->id)->first();
+    if ($user->role !== 'admin') {
+        $kelas = Kelas::where('wali_kelas_id', $user->id)->first();
 
-    // pastikan siswa milik kelas dia
-    $valid = Siswa::where('id', $request->siswa_id)
-        ->where('kelas_id', $kelas->id ?? null)
-        ->exists();
+        // pastikan siswa milik kelas dia (jika guru tersebut punya kelas)
+        if ($kelas) {
+            $valid = Siswa::where('id', $request->siswa_id)
+                ->where('kelas_id', $kelas->id)
+                ->exists();
 
-    if (!$valid) {
-        return back()->with('error', 'Siswa tidak valid');
+            if (!$valid) {
+                return back()->with('error', 'Siswa tidak valid');
+            }
+        }
     }
     // simpan deskripsi
     Nilai::create([

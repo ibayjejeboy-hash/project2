@@ -314,7 +314,7 @@ document.addEventListener("DOMContentLoaded", function () {
     async function loadKecamatan(kabupatenCode) {
 
         const response =
-            await fetch(`/api/kecamatan/${kabupatenCode}`);
+            await fetch(`/api/kecamatan/${kabupatenCode.replace('.', '-')}`);
 
         const result = await response.json();
 

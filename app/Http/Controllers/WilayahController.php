@@ -22,6 +22,7 @@ class WilayahController extends Controller
 
     public function kecamatan($id)
     {
+        $id = str_replace('-', '.', $id);
         $response = Http::get("https://wilayah.id/api/districts/$id.json");
 
         return response()->json($response->json());
