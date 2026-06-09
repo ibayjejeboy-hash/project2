@@ -44,33 +44,33 @@
 
                 <a href="{{ route('siswa.dashboard', $siswa->id) }}"
                    class="flex items-center gap-3 p-3 rounded-xl hover:bg-white hover:text-green-800 transition duration-300 {{ request()->routeIs('siswa.dashboard') ? 'bg-white text-green-800 font-bold' : 'font-semibold' }}">
-                    <span class="text-xl">📊</span>
+                    <span class="text-xl"></span>
                     <span>Dashboard</span>
                 </a>
 
                 <a href="{{ route('erapor.hasil', $siswa->id) }}"
                    class="flex items-center gap-3 p-3 rounded-xl hover:bg-white hover:text-green-800 transition duration-300 {{ request()->routeIs('erapor.hasil') ? 'bg-white text-green-800 font-bold' : 'font-semibold' }}">
-                    <span class="text-xl">📋</span>
+                    <span class="text-xl"></span>
                     <span>Lihat Rapor</span>
                 </a>
 
                 <a href="{{ route('erapor.cetak', $siswa->id) }}"
                    class="flex items-center gap-3 p-3 rounded-xl hover:bg-white hover:text-green-800 transition duration-300 {{ request()->routeIs('erapor.cetak') ? 'bg-white text-green-800 font-bold' : 'font-semibold' }}">
-                    <span class="text-xl">🖨️</span>
+                    <span class="text-xl"></span>
                     <span>Cetak Rapor</span>
                 </a>
 
             </nav>
 
-            {{-- Logout (FIX DI BAWAH) --}}
-            <div class="p-4 border-t border-green-700 bg-green-950/30">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button class="w-full bg-white text-green-800 font-bold py-2 rounded-xl hover:bg-gray-200 transition">
-                        Keluar
-                    </button>
-                </form>
-            </div>
+             {{-- LOGOUT (FIX DI BAWAH) --}}
+    <div class="p-4 border-t border-green-300 bg-green-600/30">
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button class="w-full bg-white text-green-600 font-bold py-2 rounded-xl hover:bg-gray-200 transition">
+                Logout
+            </button>
+        </form>
+    </div>
 
         </aside>
 
