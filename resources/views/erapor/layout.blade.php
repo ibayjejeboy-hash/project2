@@ -10,6 +10,9 @@
         #erapor-sidebar {
             transition: transform 0.3s ease;
         }
+        #erapor-sidebar-overlay {
+            transition: opacity 0.3s ease;
+        }
     </style>
 </head>
 
@@ -55,12 +58,12 @@
 
             </nav>
 
-            {{-- LOGOUT --}}
-            <div class="p-4 border-t border-green-700">
+            {{-- LOGOUT (FIX DI BAWAH) --}}
+            <div class="p-4 border-t border-green-700 bg-green-900/30">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button
-                        class="w-full bg-white text-[#228b22] font-semibold py-2 rounded-lg hover:bg-gray-200 transition">
+                        class="w-full bg-white text-[#2e7d32] font-bold py-2 rounded-xl hover:bg-gray-200 transition">
                         Logout
                     </button>
                 </form>
