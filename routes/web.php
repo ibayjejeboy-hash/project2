@@ -171,3 +171,11 @@ Route::get('/pendaftaran/form', function () {
 
 Route::post('/pendaftaran/store', [PendaftaranController::class, 'store'])
     ->name('pendaftaran.store');
+
+    Route::get('/pendaftaran/syarat', function () {
+    return view('pendaftaran.syarat');
+})->name('pendaftaran.syarat');
+
+Route::get('/pendaftaran/panduan', function () {
+    return view('pendaftaran.panduan');
+})->name('pendaftaran.panduan');

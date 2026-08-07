@@ -83,26 +83,32 @@
     </div>
 
     {{-- Card 2 --}}
-    <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition duration-300 text-center">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">SYARAT PENDAFTARAN</h3>
-        <p class="text-gray-600 mb-6">
-            Ketahui syarat dan ketentuan yang harus dipenuhi oleh calon siswa.
-        </p>
-        <button class="bg-green-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 transition">
-            Selengkapnya
-        </button>
-    </div>
+<div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition duration-300 text-center">
+    <h3 class="text-xl font-bold text-gray-800 mb-3">SYARAT PENDAFTARAN</h3>
 
-    {{-- Card 3 --}}
-    <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition duration-300 text-center">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">PANDUAN PENDAFTARAN</h3>
-        <p class="text-gray-600 mb-6">
-            Panduan lengkap penggunaan sistem PPDB online.
-        </p>
-        <button class="bg-green-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 transition">
-            Selengkapnya
-        </button>
-    </div>
+    <p class="text-gray-600 mb-6">
+        Ketahui syarat dan ketentuan yang harus dipenuhi oleh calon peserta didik RA.
+    </p>
+
+    <a href="{{ route('pendaftaran.syarat') }}"
+       class="inline-block bg-green-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 transition">
+        Selengkapnya
+    </a>
+</div>
+
+{{-- Card 3 --}}
+<div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition duration-300 text-center">
+    <h3 class="text-xl font-bold text-gray-800 mb-3">PANDUAN PENDAFTARAN</h3>
+
+    <p class="text-gray-600 mb-6">
+        Panduan lengkap tata cara pendaftaran peserta didik baru secara online.
+    </p>
+
+    <a href="{{ route('pendaftaran.panduan') }}"
+       class="inline-block bg-green-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 transition">
+        Selengkapnya
+    </a>
+</div>
 
 </div>
 
