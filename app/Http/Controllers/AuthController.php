@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Siswa;
 use Laravel\Socialite\Facades\Socialite;
@@ -11,114 +14,63 @@ use Laravel\Socialite\Facades\Socialite;
 class AuthController extends Controller
 {
     public function login()
-{
-    return view('erapor.login');
-}
-
-public function authenticate(Request $request)
-{
-    if (Auth::attempt($request->only('email','password')))
     {
-        $user = Auth::user();
+        return view('admin.login');
+    }
 
-        // 👑 ADMIN
-        if ($user->role == 'admin') {
+    public function redirectGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogle()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+        } catch (\Exception $e) {
+            Log::error('[Google Login Error] Gagal mengambil data user: ' . $e->getMessage());
+            return redirect()->route('login')->with('error', 'Gagal melakukan login dengan Google. Silakan coba lagi.');
+        }
+
+        $googleEmail = strtolower(trim($googleUser->getEmail()));
+
+        // Cari user berdasarkan email Google
+        $user = User::whereRaw('LOWER(email) = ?', [$googleEmail])->first();
+
+        if (!$user) {
+            // Buat user baru dengan password acak yang aman (Anti-Default Password)
+            $user = User::create([
+                'name'     => $googleUser->getName(),
+                'email'    => $googleEmail,
+                'password' => Hash::make(Str::random(32)),
+                'role'     => 'siswa'
+            ]);
+        }
+
+        // Tautkan data Siswa jika email cocok
+        $siswa = Siswa::whereRaw('LOWER(email) = ?', [$googleEmail])->first();
+        if ($siswa) {
+            if ((int)$siswa->user_id !== (int)$user->id) {
+                $siswa->update(['user_id' => $user->id]);
+            }
+        }
+
+        Auth::login($user, true);
+
+        // Redirect dinamis sesuai role pengguna
+        if ($user->role === 'admin') {
             return redirect()->route('admin.dashboard');
-        }
-
-        // 👨‍🏫 GURU
-        if ($user->role == 'guru') {
+        } elseif ($user->role === 'guru') {
             return redirect()->route('erapor.dashboard');
-        }
+        } else {
+            // Ambil data siswa milik user ini
+            $siswaData = Siswa::where('user_id', $user->id)->first();
 
-        // 🧑‍🎓 SISWA
-        if ($user->role == 'siswa') {
-
-            $siswa = Siswa::where('user_id', $user->id)->first();
-
-            if ($siswa) {
-                if (auth()->user()->role == 'admin') {
-
-                    return redirect()->route('admin.dashboard');
-
-                } elseif (auth()->user()->role == 'guru') {
-
-                    return redirect()->route('erapor.dashboard');
-
-                } else {
-
-                    return redirect()->route('siswa.dashboard', ['id' => $siswa->id]);
-
-                }
+            if ($siswaData) {
+                return redirect()->route('siswa.dashboard', ['id' => $siswaData->id]);
             } else {
-                return back()->with('error','Data siswa tidak ditemukan');
+                return redirect()->route('login')->with('error', 'Email Google Anda (' . $googleEmail . ') belum terhubung dengan data siswa di database. Silakan hubungi admin sekolah!');
             }
         }
     }
-
-    return back()->with('error','Login gagal');
-}
-
-public function redirectGoogle()
-{
-    return Socialite::driver('google')->redirect();
-}
-
-public function handleGoogle()
-{
-    $googleUser = Socialite::driver('google')->user();
-    $googleEmail = strtolower(trim($googleUser->getEmail()));
-
-    \Log::info('[Google Login] Email dari Google: ' . $googleEmail);
-
-    // Find User by Google email (case-insensitive)
-    $user = User::whereRaw('LOWER(email) = ?', [$googleEmail])->first();
-
-    if (!$user) {
-        \Log::info('[Google Login] User tidak ditemukan, membuat baru...');
-        $user = User::create([
-            'name'     => $googleUser->getName(),
-            'email'    => $googleEmail,
-            'password' => bcrypt('12345678'), // default password
-            'role'     => 'siswa'
-        ]);
-        \Log::info('[Google Login] User baru dibuat, ID: ' . $user->id);
-    } else {
-        \Log::info('[Google Login] User ditemukan, ID: ' . $user->id . ' | role: ' . $user->role);
-    }
-
-    // Link the student record (Siswa) if exists — case-insensitive email match
-    $siswa = Siswa::whereRaw('LOWER(email) = ?', [$googleEmail])->first();
-    if ($siswa) {
-        \Log::info('[Google Login] Siswa ditemukan: ID=' . $siswa->id . ' nama=' . $siswa->nama . ' user_id=' . $siswa->user_id);
-        // Always ensure user_id is linked (even if it was linked before)
-        if ((int)$siswa->user_id !== (int)$user->id) {
-            $siswa->update(['user_id' => $user->id]);
-            \Log::info('[Google Login] user_id diperbarui ke: ' . $user->id);
-        }
-    } else {
-        \Log::warning('[Google Login] Siswa TIDAK ditemukan untuk email: ' . $googleEmail);
-    }
-
-    Auth::login($user);
-
-    // Redirect sesuai role
-    if ($user->role == 'admin') {
-        return redirect('/admin/dashboard');
-    } elseif ($user->role == 'guru') {
-        return redirect('/erapor/dashboard');
-    } else {
-        // Refresh relasi untuk mendapatkan data siswa terbaru
-        $user->refresh();
-        \Log::info('[Google Login] Setelah refresh - siswa: ' . ($user->siswa ? 'ADA id=' . $user->siswa->id : 'NULL'));
-
-        if ($user->siswa) {
-            return redirect('/siswa/dashboard/' . $user->siswa->id);
-        } else {
-            \Log::error('[Google Login] GAGAL - siswa null setelah refresh. user_id=' . $user->id);
-            return redirect('/login')->with('error', 'Email Google kamu (' . $googleEmail . ') belum terdaftar sebagai siswa. Hubungi admin!');
-        }
-    }
-}
-
 }

@@ -11,25 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('nilai_checks', function (Blueprint $table) {
-    $table->id();
-
-    $table->foreignId('siswa_id')->constrained()->onDelete('cascade');
-
-    // INI PENTING 🔥
-    $table->foreignId('indikator_id')
-          ->constrained('indikators')
-          ->onDelete('cascade');
-
-    $table->enum('nilai', ['cukup','baik','sangat_baik']);
-    $table->string('kategori');
-
-    $table->timestamps();
-});
+        Schema::create('nilai_checks', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('siswa_id')->constrained('siswas')->onDelete('cascade');
+            $table->foreignId('indikator_id')->constrained('indikators')->onDelete('cascade');
+            $table->enum('nilai', ['cukup', 'baik', 'sangat_baik']);
+            $table->string('kategori'); // 'p5' atau 'profil'
+            $table->timestamps();
+        });
     }
-    protected $fillable = [
-    'siswa_id','indikator_id','nilai','kategori'
-];
 
     /**
      * Reverse the migrations.

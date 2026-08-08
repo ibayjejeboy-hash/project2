@@ -4,125 +4,123 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Galeri;
 use App\Models\User;
 use App\Models\Siswa;
 use App\Models\Kelas;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Pendaftaran;
 
 class AdminController extends Controller
 {
+    public function dashboard()
+    {
+        $totalGaleri = Galeri::count();
+        $totalSiswa = Siswa::count();
+        $totalGuru = User::where('role', 'guru')->count();
+        $totalPendaftaran = Pendaftaran::count();
+
+        return view('admin.dashboard', compact('totalGaleri', 'totalSiswa', 'totalGuru', 'totalPendaftaran'));
+    }
+
     public function user()
-{
-    $users = User::all();
-    return view('admin.user', compact('users'));
-}
+    {
+        $users = User::latest()->get();
+        return view('admin.user', compact('users'));
+    }
 
-public function storeUser(Request $request)
-{
-    $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:6',
-    ]);
+    public function createUser($id)
+    {
+        $siswa = Siswa::findOrFail($id);
+        $user = $siswa->user_id ? User::find($siswa->user_id) : null;
 
-    $user = User::create([ 
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'role' => $request->role ?? 'siswa',
-    ]);
+        return view('admin.user-create', compact('siswa', 'user'));
+    }
 
-    if ($request->siswa_id) {
-        Siswa::where('id', $request->siswa_id)
-            ->update([
+    public function storeUser(Request $request)
+    {
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email|max:255',
+            'password' => 'required|string|min:6',
+            'role'     => 'required|in:admin,guru,siswa',
+        ]);
+
+        $emailClean = strtolower(trim($request->email));
+
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $emailClean,
+            'password' => Hash::make($request->password),
+            'role'     => $request->role,
+        ]);
+
+        if ($request->filled('siswa_id')) {
+            Siswa::where('id', $request->siswa_id)->update([
                 'user_id' => $user->id,
-                'email' => $user->email,
-            ]);
-    } else {
-        if ($user->role == 'siswa') {
-            Siswa::create([
-                'nama' => $user->name,
-                'email' => $user->email,
-                'user_id' => $user->id,
+                'email'   => $user->email,
             ]);
         }
-    }
 
-    if ($user->role == 'guru') {
-        return redirect()->route('erapor.dashboard');
+        return redirect()->route('admin.user')->with('success', 'Akun pengguna berhasil dibuat!');
     }
-
-    return redirect()->route('admin.siswa')->with('success','Akun berhasil dibuat');
-}
 
     public function login()
-{
-    return view('admin.login');
-}
-
-public function authenticate(Request $request)
-{
-    if (Auth::attempt($request->only('email','password')))
     {
-        $user = Auth::user();
-
-        // 👨‍🏫 GURU
-        if ($user->role == 'guru') {
-            return redirect()->route('erapor.dashboard');
-        }
-
-        // 🧑‍🎓 SISWA
-        if ($user->role == 'siswa') {
-
-            $siswa = Siswa::where('user_id', $user->id)->first();
-
-            if ($siswa) {
-                return redirect('/siswa/dashboard/' . $siswa->id);
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->role === 'guru') {
+                return redirect()->route('erapor.dashboard');
             } else {
-                return back()->with('error','Data siswa tidak ditemukan');
+                $siswa = Siswa::where('user_id', $user->id)->first();
+                return $siswa
+                    ? redirect()->route('siswa.dashboard', $siswa->id)
+                    : redirect()->route('home');
             }
         }
 
-        // 👑 ADMIN (optional)
-        if ($user->role == 'admin') {
-            return redirect()->route('admin.dashboard');
-        }
+        return view('admin.login');
     }
 
-    return back()->with('error','Login gagal');
-}
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required',
+        ]);
 
-public function createUser($id)
-{
-    $siswa = Siswa::findOrFail($id);
+        $credentials['email'] = strtolower(trim($credentials['email']));
 
-    $user = User::find($siswa->user_id);
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            $request->session()->regenerate(); // Mencegah serangan Session Fixation
 
-    return view('admin.user-create', compact(
-        'siswa',
-        'user'
-    ));
-}
+            $user = Auth::user();
 
-public function dashboard()
-{
-    $totalGaleri = Galeri::count();
+            if ($user->role === 'admin') {
+                return redirect()->intended(route('admin.dashboard'));
+            } elseif ($user->role === 'guru') {
+                return redirect()->intended(route('erapor.dashboard'));
+            } elseif ($user->role === 'siswa') {
+                $siswa = Siswa::where('user_id', $user->id)->first();
+                if ($siswa) {
+                    return redirect()->intended(route('siswa.dashboard', $siswa->id));
+                } else {
+                    return redirect()->route('home')->with('info', 'Selamat datang! Profil siswa Anda belum dihubungkan.');
+                }
+            }
+        }
 
-    return view('admin.dashboard', compact('totalGaleri'));
-}
+        return back()->with('error', 'Email atau password yang Anda masukkan salah.');
+    }
 
-public function logout()
-{
-    Auth::logout();
-    return redirect()->route('admin.login');
-}
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-public function create()
-{
-    $gurus = User::where('role', 'guru')->get();
-
-    return view('admin.kelas.create', compact('gurus'));
-}
-
+        return redirect()->route('login')->with('success', 'Anda telah berhasil keluar (logout).');
+    }
 }

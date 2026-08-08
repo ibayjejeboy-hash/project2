@@ -17,55 +17,53 @@ class GaleriController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'judul' => 'required',
-            'gambar' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+            'judul'  => 'required|string|max:255',
+            'gambar' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         $path = $request->file('gambar')->store('galeri', 'public');
 
         Galeri::create([
-            'judul' => $request->judul,
-            'gambar' => $path
+            'judul'  => $request->judul,
+            'gambar' => $path,
         ]);
 
-        return redirect()->back()->with('success', 'Gambar berhasil ditambahkan!');
+        return redirect()->back()->with('success', 'Foto galeri berhasil ditambahkan!');
     }
 
     public function update(Request $request, $id)
     {
         $galeri = Galeri::findOrFail($id);
+
         $request->validate([
-            'judul' => 'required',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'judul'  => 'required|string|max:255',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-    if ($request->hasFile('gambar')) {
-
-        // Hapus gambar lama
-        if ($galeri->gambar && Storage::disk('public')->exists($galeri->gambar)) {
-            Storage::disk('public')->delete($galeri->gambar);
+        if ($request->hasFile('gambar')) {
+            // Hapus gambar lama jika ada
+            if ($galeri->gambar && Storage::disk('public')->exists($galeri->gambar)) {
+                Storage::disk('public')->delete($galeri->gambar);
+            }
+            $galeri->gambar = $request->file('gambar')->store('galeri', 'public');
         }
-
-        $path = $request->file('gambar')->store('galeri', 'public');
-        $galeri->gambar = $path;
-    }
 
         $galeri->judul = $request->judul;
         $galeri->save();
 
-        return redirect()->back()->with('success', 'Galeri berhasil diupdate!');
+        return redirect()->back()->with('success', 'Galeri berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
         $galeri = Galeri::findOrFail($id);
 
-    if ($galeri->gambar && Storage::disk('public')->exists($galeri->gambar)) {
-        Storage::disk('public')->delete($galeri->gambar);
-    }
+        if ($galeri->gambar && Storage::disk('public')->exists($galeri->gambar)) {
+            Storage::disk('public')->delete($galeri->gambar);
+        }
 
         $galeri->delete();
 
-        return redirect()->back()->with('success', 'Galeri berhasil dihapus!');
+        return redirect()->back()->with('success', 'Foto galeri berhasil dihapus!');
     }
 }

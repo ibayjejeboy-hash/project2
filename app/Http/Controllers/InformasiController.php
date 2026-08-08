@@ -16,29 +16,35 @@ class InformasiController extends Controller
     }
 
     public function store(Request $request)
-{
-    $informasi = Informasi::first();
+    {
+        $request->validate([
+            'visi'      => 'nullable|string',
+            'misi'      => 'nullable|string',
+            'deskripsi' => 'nullable|string',
+            'foto'      => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
 
-    if ($request->hasFile('foto')) {
+        $informasi = Informasi::first();
+        $foto = $informasi?->foto;
 
-        $foto = $request->file('foto')->store('informasi','public');
+        if ($request->hasFile('foto')) {
+            // Hapus foto lama jika ada
+            if ($foto && Storage::disk('public')->exists($foto)) {
+                Storage::disk('public')->delete($foto);
+            }
+            $foto = $request->file('foto')->store('informasi', 'public');
+        }
 
-    } else {
+        Informasi::updateOrCreate(
+            ['id' => 1],
+            [
+                'visi'      => $request->visi,
+                'misi'      => $request->misi,
+                'deskripsi' => $request->deskripsi,
+                'foto'      => $foto,
+            ]
+        );
 
-        $foto = $informasi->foto ?? null;
-
+        return redirect()->back()->with('success', 'Informasi profil sekolah berhasil diperbarui!');
     }
-
-    Informasi::updateOrCreate(
-        ['id' => 1],
-        [
-            'visi' => $request->visi,
-            'misi' => $request->misi,
-            'deskripsi' => $request->deskripsi,
-            'foto' => $foto
-        ]
-    );
-
-    return redirect()->back()->with('success','Informasi berhasil diperbarui');
-}
 }
