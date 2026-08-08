@@ -90,17 +90,22 @@
                 @foreach($indikator as $i => $item)
                 @php
                     $cek = $nilaiP5->where('indikator_id', $item->id)->first();
-                    $badgeClass = 'bg-gray-100 text-gray-800';
-                    $valText = $cek->nilai ?? '-';
-                    if($valText == 'sangat_baik') {
-                        $badgeClass = 'bg-green-100 text-green-800 border border-green-200';
-                        $valText = 'Sangat Baik';
-                    } elseif($valText == 'baik') {
+                    $badgeClass = 'bg-gray-100 text-gray-800 border border-gray-200';
+                    $valRaw = strtolower($cek->nilai ?? '');
+                    $valText = '-';
+
+                    if(in_array($valRaw, ['sangat_baik', 'bsb'])) {
+                        $badgeClass = 'bg-emerald-100 text-emerald-800 border border-emerald-200';
+                        $valText = 'BSB (Sangat Baik)';
+                    } elseif(in_array($valRaw, ['baik', 'bsh'])) {
                         $badgeClass = 'bg-blue-100 text-blue-800 border border-blue-200';
-                        $valText = 'Baik';
-                    } elseif($valText == 'cukup') {
-                        $badgeClass = 'bg-yellow-100 text-yellow-800 border border-yellow-200';
-                        $valText = 'Cukup';
+                        $valText = 'BSH (Sesuai Harapan)';
+                    } elseif(in_array($valRaw, ['cukup', 'mb'])) {
+                        $badgeClass = 'bg-amber-100 text-amber-800 border border-amber-200';
+                        $valText = 'MB (Mulai Berkembang)';
+                    } elseif(in_array($valRaw, ['kurang', 'bb'])) {
+                        $badgeClass = 'bg-rose-100 text-rose-800 border border-rose-200';
+                        $valText = 'BB (Belum Berkembang)';
                     }
                 @endphp
                 <tr class="hover:bg-gray-50/50 transition">
@@ -142,17 +147,22 @@
                 @foreach($indikatorRahmatan as $i => $item)
                 @php
                     $cek = $nilaiRahmatan->where('indikator_id', $item->id)->first();
-                    $badgeClass = 'bg-gray-100 text-gray-800';
-                    $valText = $cek->nilai ?? '-';
-                    if($valText == 'sangat_baik') {
-                        $badgeClass = 'bg-green-100 text-green-800 border border-green-200';
-                        $valText = 'Sangat Baik';
-                    } elseif($valText == 'baik') {
+                    $badgeClass = 'bg-gray-100 text-gray-800 border border-gray-200';
+                    $valRaw = strtolower($cek->nilai ?? '');
+                    $valText = '-';
+
+                    if(in_array($valRaw, ['sangat_baik', 'bsb'])) {
+                        $badgeClass = 'bg-emerald-100 text-emerald-800 border border-emerald-200';
+                        $valText = 'BSB (Sangat Baik)';
+                    } elseif(in_array($valRaw, ['baik', 'bsh'])) {
                         $badgeClass = 'bg-blue-100 text-blue-800 border border-blue-200';
-                        $valText = 'Baik';
-                    } elseif($valText == 'cukup') {
-                        $badgeClass = 'bg-yellow-100 text-yellow-800 border border-yellow-200';
-                        $valText = 'Cukup';
+                        $valText = 'BSH (Sesuai Harapan)';
+                    } elseif(in_array($valRaw, ['cukup', 'mb'])) {
+                        $badgeClass = 'bg-amber-100 text-amber-800 border border-amber-200';
+                        $valText = 'MB (Mulai Berkembang)';
+                    } elseif(in_array($valRaw, ['kurang', 'bb'])) {
+                        $badgeClass = 'bg-rose-100 text-rose-800 border border-rose-200';
+                        $valText = 'BB (Belum Berkembang)';
                     }
                 @endphp
                 <tr class="hover:bg-gray-50/50 transition">

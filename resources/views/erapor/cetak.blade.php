@@ -321,20 +321,22 @@
             @forelse($indikator as $i => $item)
             @php
                 $cek = $nilaiP5->where('indikator_id', $item->id)->first();
-                $val = $cek->nilai ?? 'BSH';
+                $val = strtolower($cek->nilai ?? 'baik');
             @endphp
             <tr>
                 <td class="center">{{ $i + 1 }}</td>
                 <td>{{ $item->deskripsi }}</td>
                 <td class="center">
-                    @if($val === 'BSB')
+                    @if(in_array($val, ['bsb', 'sangat_baik']))
                         <span class="badge-nilai badge-bsb">BSB (Sangat Baik)</span>
-                    @elseif($val === 'BSH')
+                    @elseif(in_array($val, ['bsh', 'baik']))
                         <span class="badge-nilai badge-bsh">BSH (Sesuai Harapan)</span>
-                    @elseif($val === 'MB')
+                    @elseif(in_array($val, ['mb', 'cukup']))
                         <span class="badge-nilai badge-mb">MB (Mulai Berkembang)</span>
-                    @else
+                    @elseif(in_array($val, ['bb', 'kurang']))
                         <span class="badge-nilai badge-bb">BB (Belum Berkembang)</span>
+                    @else
+                        <span class="badge-nilai badge-bsh">BSH (Sesuai Harapan)</span>
                     @endif
                 </td>
             </tr>
@@ -377,20 +379,22 @@
             @forelse($indikatorRahmatan as $i => $item)
             @php
                 $cek = $nilaiRahmatan->where('indikator_id', $item->id)->first();
-                $val = $cek->nilai ?? 'BSH';
+                $val = strtolower($cek->nilai ?? 'baik');
             @endphp
             <tr>
                 <td class="center">{{ $i + 1 }}</td>
                 <td>{{ $item->deskripsi }}</td>
                 <td class="center">
-                    @if($val === 'BSB')
+                    @if(in_array($val, ['bsb', 'sangat_baik']))
                         <span class="badge-nilai badge-bsb">BSB (Sangat Baik)</span>
-                    @elseif($val === 'BSH')
+                    @elseif(in_array($val, ['bsh', 'baik']))
                         <span class="badge-nilai badge-bsh">BSH (Sesuai Harapan)</span>
-                    @elseif($val === 'MB')
+                    @elseif(in_array($val, ['mb', 'cukup']))
                         <span class="badge-nilai badge-mb">MB (Mulai Berkembang)</span>
-                    @else
+                    @elseif(in_array($val, ['bb', 'kurang']))
                         <span class="badge-nilai badge-bb">BB (Belum Berkembang)</span>
+                    @else
+                        <span class="badge-nilai badge-bsh">BSH (Sesuai Harapan)</span>
                     @endif
                 </td>
             </tr>
