@@ -175,6 +175,19 @@
                 <span>Manajemen Akun</span>
             </a>
 
+            <div class="px-3 pt-4 pb-1 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">
+                Pusat Bantuan
+            </div>
+
+            {{-- 8. Panduan & Bantuan --}}
+            <button onclick="openPanduanModal()" 
+                    type="button"
+                    class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-emerald-950/60 hover:text-lime-300 border border-emerald-500/20 bg-slate-800/40 transition-all duration-200 group text-left">
+                <i class="fa-solid fa-circle-question w-5 text-center text-lime-400 group-hover:scale-110 transition-transform"></i>
+                <span>Panduan &amp; Bantuan</span>
+                <span class="ml-auto text-[10px] font-extrabold bg-lime-400/20 text-lime-300 px-1.5 py-0.5 rounded">FAQ</span>
+            </button>
+
         </div>
 
         {{-- Bottom Action: Back to Web & Logout --}}
@@ -224,6 +237,14 @@
             {{-- Right: System Status Badges & Quick Links --}}
             <div class="flex items-center gap-3">
                 
+                {{-- Panduan & Bantuan Header Button --}}
+                <button type="button" 
+                        onclick="openPanduanModal()" 
+                        class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white font-extrabold rounded-xl text-xs shadow-sm hover:shadow transition duration-200 cursor-pointer">
+                    <i class="fa-solid fa-circle-question text-lime-300"></i>
+                    <span class="hidden sm:inline">Panduan &amp; Bantuan</span>
+                </button>
+
                 {{-- Semester Badge --}}
                 <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-200 text-green-800 rounded-xl text-xs font-bold shadow-xs">
                     <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
@@ -329,6 +350,10 @@
             }
         }
     </script>
+
+    {{-- Modal Pusat Panduan & Bantuan --}}
+    @include('components.panduan-modal')
+
     @stack('scripts')
 </body>
 </html>

@@ -87,6 +87,15 @@
                 </a>
                 @endif
 
+                <div class="pt-3 px-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-green-300/80">Pusat Bantuan</div>
+                <button onclick="openPanduanModal('erapor')"
+                        type="button"
+                        class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-green-100 hover:bg-white/10 font-semibold text-xs transition duration-200 text-left border border-white/10 bg-white/5">
+                    <i class="fa-solid fa-circle-question w-5 text-center text-sm text-lime-300"></i>
+                    <span class="text-xs sm:text-sm">Panduan E-Rapor</span>
+                    <span class="ml-auto text-[9px] font-extrabold bg-lime-400/20 text-lime-300 px-1.5 py-0.5 rounded">FAQ</span>
+                </button>
+
             </nav>
 
             {{-- LOGOUT --}}
@@ -113,7 +122,14 @@
                     </button>
                     <span class="font-extrabold text-sm uppercase tracking-wider">E-Rapor Guru</span>
                 </div>
-                <span class="text-xs bg-white/15 px-2.5 py-1 rounded-full font-bold">RA Al-Musyaffallah</span>
+                <div class="flex items-center gap-2">
+                    <button onclick="openPanduanModal('erapor')" 
+                            type="button"
+                            class="px-2.5 py-1 bg-white/20 hover:bg-white/30 text-lime-200 text-xs font-bold rounded-lg flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-question"></i>
+                        <span>Panduan</span>
+                    </button>
+                </div>
             </header>
 
             {{-- MAIN CONTENT --}}
@@ -157,6 +173,9 @@
         document.body.style.overflow = '';
     }
     </script>
+
+    {{-- Modal Pusat Panduan & Bantuan --}}
+    @include('components.panduan-modal')
 
     @stack('modals')
     @stack('scripts')
