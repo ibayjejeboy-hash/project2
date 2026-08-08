@@ -1,10 +1,14 @@
 @extends('layouts.app')
 
+@section('title', 'Formulir Pendaftaran Siswa Baru - RA Al Musyaffallah')
+
 @section('content')
 
-<section class="bg-gray-50 min-h-screen px-6 py-12">
+@include('layouts.navbar')
 
-    <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg border">
+<section class="bg-gray-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
 
         {{-- Header --}}
         <div class="bg-green-600 text-white rounded-t-2xl px-8 py-6">
@@ -220,5 +224,7 @@
     </div>
 
 </section>
+
+@include('layouts.footer')
 
 @endsection
