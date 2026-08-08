@@ -35,4 +35,27 @@ class PendaftaranController extends Controller
 
         return back()->with('success', 'Pendaftaran online berhasil dikirim! Pihak sekolah akan segera menghubungi Anda.');
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,diterima,ditolak',
+        ]);
+
+        $pendaftaran = Pendaftaran::findOrFail($id);
+        $pendaftaran->update([
+            'status' => $request->status,
+        ]);
+
+        return back()->with('success', "Status pendaftaran {$pendaftaran->nama_anak} berhasil diubah menjadi: {$request->status}!");
+    }
+
+    public function destroy($id)
+    {
+        $pendaftaran = Pendaftaran::findOrFail($id);
+        $nama = $pendaftaran->nama_anak;
+        $pendaftaran->delete();
+
+        return back()->with('success', "Data pendaftaran {$nama} berhasil dihapus.");
+    }
 }

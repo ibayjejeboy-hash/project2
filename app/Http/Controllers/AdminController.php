@@ -15,12 +15,24 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $totalGaleri = Galeri::count();
-        $totalSiswa = Siswa::count();
-        $totalGuru = User::where('role', 'guru')->count();
+        $totalGaleri      = Galeri::count();
+        $totalSiswa       = Siswa::count();
+        $totalGuru        = User::where('role', 'guru')->count();
         $totalPendaftaran = Pendaftaran::count();
 
-        return view('admin.dashboard', compact('totalGaleri', 'totalSiswa', 'totalGuru', 'totalPendaftaran'));
+        $recentPendaftaran = Pendaftaran::latest()->take(5)->get();
+        $kelasList         = Kelas::with('waliKelas')->withCount('siswa')->get();
+        $recentGaleri      = Galeri::latest()->take(4)->get();
+
+        return view('admin.dashboard', compact(
+            'totalGaleri', 
+            'totalSiswa', 
+            'totalGuru', 
+            'totalPendaftaran',
+            'recentPendaftaran',
+            'kelasList',
+            'recentGaleri'
+        ));
     }
 
     public function user()
