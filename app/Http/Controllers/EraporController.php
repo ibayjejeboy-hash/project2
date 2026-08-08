@@ -83,24 +83,25 @@ class EraporController extends Controller
     {
         $request->validate([
             'siswa_id'  => 'required',
-            'semester'  => 'required|string',
+            'semester'  => 'nullable|string',
             'agama'     => 'required|string',
             'jati_diri' => 'required|string',
             'literasi'  => 'required|string',
         ]);
 
+        $semester = $request->semester ?: '1';
         $siswa = $this->authorizeSiswaAccess($request->siswa_id);
 
         $nilai = Nilai::updateOrCreate(
             [
                 'siswa_id' => $siswa->id,
-                'semester' => $request->semester,
+                'semester' => $semester,
             ],
             [
                 'agama'     => $request->agama,
                 'jati_diri' => $request->jati_diri,
                 'literasi'  => $request->literasi,
-                'semester'  => $request->semester,
+                'semester'  => $semester,
             ]
         );
 
