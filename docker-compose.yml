@@ -1,0 +1,25 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: eraport-web
+    container_name: eraport-web
+    restart: always
+    ports:
+      - "8092:80"
+    volumes:
+      # Persist storage directory for uploads/logs
+      - ./storage:/var/www/html/storage
+      # Mount environment file to prevent losing settings
+      - ./.env:/var/www/html/.env
+    networks:
+      - eraport-network
+      # Menghubungkan ke network miomidev untuk akses database miomidev-mysql
+      - miomidev-web_miomidev-network
+
+networks:
+  eraport-network:
+    driver: bridge
+  miomidev-web_miomidev-network:
+    external: true
