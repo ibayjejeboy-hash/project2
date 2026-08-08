@@ -1,0 +1,29 @@
+name: E-Raport Auto Deploy CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+          script: |
+            git config --global --add safe.directory /home/miomideveloper/e-raport-almusyafallahi
+            cd /home/miomideveloper/e-raport-almusyafallahi
+            git fetch --all
+            git reset --hard origin/main
+            chmod +x deploy.sh
+            ./deploy.sh
