@@ -43,7 +43,7 @@
         </div>
 
         <form method="POST" 
-              action="{{ $siswa->user_id ? route('admin.user-create.update', $siswa->id) : route('admin.user.store') }}" 
+              action="{{ $siswa->user_id ? route('admin.user-create.update', $siswa->uuid ?? $siswa->id) : route('admin.user.store') }}" 
               class="space-y-5">
             @csrf
 

@@ -144,6 +144,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Manajemen Pendaftaran
     Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran');
     Route::put('/pendaftaran/{id}/status', [PendaftaranController::class, 'updateStatus'])->name('pendaftaran.status');
+    Route::post('/pendaftaran/{id}/konversi', [PendaftaranController::class, 'konversi'])->name('pendaftaran.konversi');
     Route::delete('/pendaftaran/{id}', [PendaftaranController::class, 'destroy'])->name('pendaftaran.destroy');
 });
 

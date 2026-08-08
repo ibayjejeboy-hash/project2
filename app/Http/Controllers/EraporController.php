@@ -15,24 +15,27 @@ class EraporController extends Controller
     /**
      * Helper untuk memeriksa hak akses siswa terhadap rapor (Anti-IDOR)
      */
-    private function authorizeSiswaAccess($siswaId)
+    private function authorizeSiswaAccess($identifier)
     {
         $user = auth()->user();
+        $siswa = Siswa::with(['kelas.waliKelas'])->byIdentifier($identifier)->firstOrFail();
 
         if ($user->role === 'siswa') {
-            $siswa = Siswa::where('user_id', $user->id)->first();
-            if (!$siswa || (int)$siswa->id !== (int)$siswaId) {
+            $userSiswa = Siswa::where('user_id', $user->id)->first();
+            if (!$userSiswa || (int)$userSiswa->id !== (int)$siswa->id) {
                 abort(403, 'Akses Ditolak: Anda hanya diperbolehkan mengakses rapor milik Anda sendiri.');
             }
         } elseif ($user->role === 'guru') {
             $kelas = Kelas::where('wali_kelas_id', $user->id)->first();
             if ($kelas) {
-                $isAllowed = Siswa::where('id', $siswaId)->where('kelas_id', $kelas->id)->exists();
+                $isAllowed = Siswa::where('id', $siswa->id)->where('kelas_id', $kelas->id)->exists();
                 if (!$isAllowed) {
                     abort(403, 'Akses Ditolak: Siswa ini bukan berada di kelas yang Anda ampu.');
                 }
             }
         }
+
+        return $siswa;
     }
 
     public function dashboard()
@@ -40,13 +43,13 @@ class EraporController extends Controller
         $user = auth()->user();
 
         if ($user->role === 'admin') {
-            $siswas = Siswa::with('kelas')->latest()->get();
+            $siswas = Siswa::with(['kelas.waliKelas', 'nilais'])->latest()->get();
         } else {
             $kelas = Kelas::where('wali_kelas_id', $user->id)->first();
             if ($kelas) {
-                $siswas = Siswa::with('kelas')->where('kelas_id', $kelas->id)->latest()->get();
+                $siswas = Siswa::with(['kelas.waliKelas', 'nilais'])->where('kelas_id', $kelas->id)->latest()->get();
             } else {
-                $siswas = Siswa::with('kelas')->latest()->get();
+                $siswas = Siswa::with(['kelas.waliKelas', 'nilais'])->latest()->get();
             }
         }
 
@@ -58,69 +61,59 @@ class EraporController extends Controller
         $user = auth()->user();
 
         if ($user->role === 'admin') {
-            $siswas = Siswa::with('kelas')->latest()->get();
+            $siswas = Siswa::with(['kelas.waliKelas', 'nilais'])->latest()->get();
         } else {
             $kelas = Kelas::where('wali_kelas_id', $user->id)->first();
             if ($kelas) {
-                $siswas = Siswa::with('kelas')->where('kelas_id', $kelas->id)->latest()->get();
+                $siswas = Siswa::with(['kelas.waliKelas', 'nilais'])->where('kelas_id', $kelas->id)->latest()->get();
             } else {
-                $siswas = Siswa::with('kelas')->latest()->get();
+                $siswas = Siswa::with(['kelas.waliKelas', 'nilais'])->latest()->get();
             }
         }
 
-        $indikatorP5 = Indikator::where('kategori', 'p5')->get();
-        $indikatorProfil = Indikator::where('kategori', 'profil')->get();
+        $indikator = Indikator::where('kategori', 'p5')->get();
+        $indikatorRahmatan = Indikator::where('kategori', 'profil')->get();
+        $indikatorP5 = $indikator;
+        $indikatorProfil = $indikatorRahmatan;
 
-        return view('erapor.input', compact('siswas', 'indikatorP5', 'indikatorProfil'));
+        return view('erapor.input', compact('siswas', 'indikator', 'indikatorRahmatan', 'indikatorP5', 'indikatorProfil'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'siswa_id'  => 'required|exists:siswas,id',
+            'siswa_id'  => 'required',
+            'semester'  => 'required|string',
             'agama'     => 'required|string',
             'jati_diri' => 'required|string',
             'literasi'  => 'required|string',
-            'p5'        => 'nullable|array',
-            'profil'    => 'nullable|array',
         ]);
 
-        $user = auth()->user();
+        $siswa = $this->authorizeSiswaAccess($request->siswa_id);
 
-        if ($user->role !== 'admin') {
-            $kelas = Kelas::where('wali_kelas_id', $user->id)->first();
-            if ($kelas) {
-                $valid = Siswa::where('id', $request->siswa_id)
-                    ->where('kelas_id', $kelas->id)
-                    ->exists();
-
-                if (!$valid) {
-                    return back()->with('error', 'Siswa tidak terdaftar di kelas Anda.');
-                }
-            }
-        }
-
-        // Simpan atau perbarui nilai deskripsi
-        Nilai::updateOrCreate(
-            ['siswa_id' => $request->siswa_id],
+        $nilai = Nilai::updateOrCreate(
+            [
+                'siswa_id' => $siswa->id,
+                'semester' => $request->semester,
+            ],
             [
                 'agama'     => $request->agama,
                 'jati_diri' => $request->jati_diri,
                 'literasi'  => $request->literasi,
-                'semester'  => $request->semester ?? '1',
+                'semester'  => $request->semester,
             ]
         );
 
         // Simpan nilai ceklis P5
         if ($request->p5) {
-            foreach ($request->p5 as $indikator_id => $nilai) {
+            foreach ($request->p5 as $indikator_id => $nilai_item) {
                 NilaiCheck::updateOrCreate(
                     [
-                        'siswa_id'     => $request->siswa_id,
+                        'siswa_id'     => $siswa->id,
                         'indikator_id' => $indikator_id,
                     ],
                     [
-                        'nilai'    => $nilai,
+                        'nilai'    => $nilai_item,
                         'kategori' => 'p5',
                     ]
                 );
@@ -129,38 +122,36 @@ class EraporController extends Controller
 
         // Simpan nilai ceklis Profil Rahmatan Lil Alamin
         if ($request->profil) {
-            foreach ($request->profil as $indikator_id => $nilai) {
+            foreach ($request->profil as $indikator_id => $nilai_item) {
                 NilaiCheck::updateOrCreate(
                     [
-                        'siswa_id'     => $request->siswa_id,
+                        'siswa_id'     => $siswa->id,
                         'indikator_id' => $indikator_id,
                     ],
                     [
-                        'nilai'    => $nilai,
+                        'nilai'    => $nilai_item,
                         'kategori' => 'profil',
                     ]
                 );
             }
         }
 
-        return redirect()->route('erapor.hasil', $request->siswa_id)
+        return redirect()->route('erapor.hasil', $siswa->uuid ?? $siswa->id)
             ->with('success', 'Rapor berhasil disimpan!');
     }
 
-    public function hasil($id)
+    public function hasil($identifier)
     {
-        $this->authorizeSiswaAccess($id);
-
-        $siswa = Siswa::with('kelas')->findOrFail($id);
-        $nilai = Nilai::where('siswa_id', $id)->latest()->first();
+        $siswa = $this->authorizeSiswaAccess($identifier);
+        $nilai = Nilai::where('siswa_id', $siswa->id)->latest()->first();
 
         // P5
         $indikator = Indikator::where('kategori', 'p5')->get();
-        $nilaiP5 = NilaiCheck::where('siswa_id', $id)->where('kategori', 'p5')->get();
+        $nilaiP5 = NilaiCheck::where('siswa_id', $siswa->id)->where('kategori', 'p5')->get();
 
         // Profil Rahmatan Lil Alamin
         $indikatorRahmatan = Indikator::where('kategori', 'profil')->get();
-        $nilaiRahmatan = NilaiCheck::where('siswa_id', $id)->where('kategori', 'profil')->get();
+        $nilaiRahmatan = NilaiCheck::where('siswa_id', $siswa->id)->where('kategori', 'profil')->get();
 
         // Layout dinamis sesuai peran
         $layout = auth()->user()->role === 'siswa' ? 'siswa.layout' : 'erapor.layout';
@@ -176,18 +167,16 @@ class EraporController extends Controller
         ));
     }
 
-    public function cetak($id)
+    public function cetak($identifier)
     {
-        $this->authorizeSiswaAccess($id);
-
-        $siswa = Siswa::with('kelas')->findOrFail($id);
-        $nilai = Nilai::where('siswa_id', $id)->latest()->first();
+        $siswa = $this->authorizeSiswaAccess($identifier);
+        $nilai = Nilai::where('siswa_id', $siswa->id)->latest()->first();
 
         $indikator = Indikator::where('kategori', 'p5')->get();
-        $nilaiP5 = NilaiCheck::where('siswa_id', $id)->where('kategori', 'p5')->get();
+        $nilaiP5 = NilaiCheck::where('siswa_id', $siswa->id)->where('kategori', 'p5')->get();
 
         $indikatorRahmatan = Indikator::where('kategori', 'profil')->get();
-        $nilaiRahmatan = NilaiCheck::where('siswa_id', $id)->where('kategori', 'profil')->get();
+        $nilaiRahmatan = NilaiCheck::where('siswa_id', $siswa->id)->where('kategori', 'profil')->get();
 
         $pdf = Pdf::loadView('erapor.cetak', compact(
             'siswa',
@@ -196,24 +185,21 @@ class EraporController extends Controller
             'nilaiP5',
             'indikatorRahmatan',
             'nilaiRahmatan'
-        ));
+        ))->setPaper('a4', 'portrait');
 
-        return $pdf->download('rapor-' . str_replace(' ', '_', $siswa->nama) . '.pdf');
+        return $pdf->download('Rapor_' . str_replace(' ', '_', $siswa->nama) . '.pdf');
     }
 
-    public function edit($id)
+    public function edit($identifier)
     {
-        $this->authorizeSiswaAccess($id);
-
-        $siswa = Siswa::with('kelas')->findOrFail($id);
-        // FIX BUG-06: Ambil record nilai terbaru
-        $nilai = Nilai::where('siswa_id', $id)->latest()->first();
+        $siswa = $this->authorizeSiswaAccess($identifier);
+        $nilai = Nilai::where('siswa_id', $siswa->id)->latest()->first();
 
         $indikator = Indikator::where('kategori', 'p5')->get();
-        $nilaiP5 = NilaiCheck::where('siswa_id', $id)->where('kategori', 'p5')->get();
+        $nilaiP5 = NilaiCheck::where('siswa_id', $siswa->id)->where('kategori', 'p5')->get();
 
         $indikatorRahmatan = Indikator::where('kategori', 'profil')->get();
-        $nilaiRahmatan = NilaiCheck::where('siswa_id', $id)->where('kategori', 'profil')->get();
+        $nilaiRahmatan = NilaiCheck::where('siswa_id', $siswa->id)->where('kategori', 'profil')->get();
 
         return view('erapor.edit', compact(
             'siswa',
@@ -225,9 +211,9 @@ class EraporController extends Controller
         ));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $identifier)
     {
-        $this->authorizeSiswaAccess($id);
+        $siswa = $this->authorizeSiswaAccess($identifier);
 
         $request->validate([
             'agama'     => 'required|string',
@@ -237,11 +223,9 @@ class EraporController extends Controller
             'profil'    => 'nullable|array',
         ]);
 
-        $siswa = Siswa::findOrFail($id);
-
         // UPDATE NILAI UTAMA
         Nilai::updateOrCreate(
-            ['siswa_id' => $id],
+            ['siswa_id' => $siswa->id],
             [
                 'agama'     => $request->agama,
                 'jati_diri' => $request->jati_diri,
@@ -255,7 +239,7 @@ class EraporController extends Controller
             foreach ($request->p5 as $indikator_id => $nilai) {
                 NilaiCheck::updateOrCreate(
                     [
-                        'siswa_id'     => $id,
+                        'siswa_id'     => $siswa->id,
                         'indikator_id' => $indikator_id,
                     ],
                     [
@@ -271,7 +255,7 @@ class EraporController extends Controller
             foreach ($request->profil as $indikator_id => $nilai) {
                 NilaiCheck::updateOrCreate(
                     [
-                        'siswa_id'     => $id,
+                        'siswa_id'     => $siswa->id,
                         'indikator_id' => $indikator_id,
                     ],
                     [
@@ -282,7 +266,7 @@ class EraporController extends Controller
             }
         }
 
-        return redirect()->route('erapor.hasil', $id)
+        return redirect()->route('erapor.hasil', $siswa->uuid ?? $siswa->id)
             ->with('success', 'Nilai rapor berhasil diperbarui!');
     }
 }

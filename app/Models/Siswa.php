@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Siswa extends Model
 {
@@ -12,6 +13,7 @@ class Siswa extends Model
     protected $table = 'siswas';
 
     protected $fillable = [
+        'uuid',
         'nama',
         'nama_panggilan',
         'nis',
@@ -36,6 +38,39 @@ class Siswa extends Model
         'tanggal_diterima',
         'foto',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($siswa) {
+            if (empty($siswa->uuid)) {
+                $siswa->uuid = (string) Str::uuid();
+            }
+        });
+    }
+
+    /**
+     * Scope to find a Siswa by UUID or fallback ID.
+     */
+    public function scopeByIdentifier($query, $identifier)
+    {
+        return $query->where(function ($q) use ($identifier) {
+            $q->where('uuid', $identifier)
+              ->orWhere('id', $identifier);
+        });
+    }
+
+    /**
+     * Resolves a Siswa model by UUID or fallback ID.
+     */
+    public static function findByIdentifierOrFail($identifier)
+    {
+        return static::byIdentifier($identifier)->firstOrFail();
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 
     public function kelas()
     {

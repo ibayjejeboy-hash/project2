@@ -7,7 +7,7 @@
         <h2 class="text-2xl font-bold text-gray-800">Edit Nilai Rapor</h2>
         <p class="text-sm text-gray-500 mt-1">Perbarui hasil penilaian belajar siswa</p>
     </div>
-    <a href="{{ route('erapor.hasil', $siswa->id) }}" class="inline-flex items-center gap-1 text-sm font-semibold text-green-600 hover:text-green-700 transition">
+    <a href="{{ route('erapor.hasil', $siswa->uuid ?? $siswa->id) }}" class="inline-flex items-center gap-1 text-sm font-semibold text-green-600 hover:text-green-700 transition">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
         </svg>
@@ -15,7 +15,7 @@
     </a>
 </div>
 
-<form action="{{ route('erapor.update', $siswa->id) }}" method="POST" class="space-y-10">
+<form action="{{ route('erapor.update', $siswa->uuid ?? $siswa->id) }}" method="POST" class="space-y-10">
     @csrf
     @method('PUT')
 
@@ -182,7 +182,7 @@
             </svg>
             Simpan Perubahan
         </button>
-        <a href="{{ route('erapor.hasil', $siswa->id) }}"
+        <a href="{{ route('erapor.hasil', $siswa->uuid ?? $siswa->id) }}"
            class="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition duration-200 text-sm">
             Batal
         </a>

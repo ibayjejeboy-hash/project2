@@ -320,21 +320,21 @@
                             <div class="flex items-center justify-center gap-1.5">
                                 
                                 {{-- Tombol Edit --}}
-                                <a href="{{ route('admin.siswa.edit', $siswa->id) }}" 
+                                <a href="{{ route('admin.siswa.edit', $siswa->uuid ?? $siswa->id) }}" 
                                    title="Edit Data Siswa"
                                    class="w-7 h-7 rounded-lg bg-amber-50 hover:bg-amber-500 text-amber-600 hover:text-white border border-amber-200 hover:border-amber-500 flex items-center justify-center text-xs transition">
                                     <i class="fa-solid fa-pen-to-square text-[10px]"></i>
                                 </a>
 
                                 {{-- Tombol Akun --}}
-                                <a href="{{ route('admin.user-create', $siswa->id) }}" 
+                                <a href="{{ route('admin.user-create', $siswa->uuid ?? $siswa->id) }}" 
                                    title="Kelola Akun Login Siswa"
                                    class="w-7 h-7 rounded-lg bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white border border-blue-200 hover:border-blue-600 flex items-center justify-center text-xs transition">
                                     <i class="fa-solid fa-key text-[10px]"></i>
                                 </a>
 
                                 {{-- Tombol Hapus --}}
-                                <form action="{{ route('admin.siswa.destroy', $siswa->id) }}" 
+                                <form action="{{ route('admin.siswa.destroy', $siswa->uuid ?? $siswa->id) }}" 
                                       method="POST"
                                       onsubmit="return confirm('Yakin ingin menghapus data siswa {{ $siswa->nama }}?')">
                                     @csrf

@@ -43,11 +43,28 @@
                 Silakan login menggunakan akun Administrator, Ustadzah (Guru Kelas), atau Akun Siswa.
             </p>
 
-            <a href="{{ route('admin.login') }}"
-               class="w-full inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition duration-200 text-base">
-                <i class="fa-solid fa-right-to-bracket"></i>
-                <span>Masuk Sekarang</span>
-            </a>
+            @auth
+                @if(auth()->user()->role === 'siswa')
+                    @php $siswaAuth = \App\Models\Siswa::where('user_id', auth()->id())->first(); @endphp
+                    <a href="{{ $siswaAuth ? route('erapor.hasil', $siswaAuth->uuid ?? $siswaAuth->id) : route('siswa.dashboard') }}"
+                       class="w-full inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition duration-200 text-base">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Lihat Rapor Siswa Saya</span>
+                    </a>
+                @else
+                    <a href="{{ route('erapor.dashboard') }}"
+                       class="w-full inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition duration-200 text-base">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Buka Dashboard E-Rapor ({{ auth()->user()->name }})</span>
+                    </a>
+                @endif
+            @else
+                <a href="{{ route('admin.login') }}"
+                   class="w-full inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white px-8 py-4 rounded-2xl font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition duration-200 text-base">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>Masuk / Login Sekarang</span>
+                </a>
+            @endauth
 
             <div class="mt-6 pt-6 border-t border-gray-100 flex items-center justify-center gap-2 text-xs text-gray-400">
                 <i class="fa-solid fa-shield-halved text-green-600"></i>

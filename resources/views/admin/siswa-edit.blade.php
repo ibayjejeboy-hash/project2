@@ -32,7 +32,7 @@
     {{-- ================= FORM EDIT SISWA ================= --}}
     <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-sm space-y-8">
         
-        <form action="{{ route('admin.siswa.update', $siswa->id) }}" 
+        <form action="{{ route('admin.siswa.update', $siswa->uuid ?? $siswa->id) }}" 
               method="POST" 
               enctype="multipart/form-data" 
               class="space-y-8">

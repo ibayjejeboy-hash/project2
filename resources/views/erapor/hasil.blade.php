@@ -176,13 +176,16 @@
 
 @auth
 @if(auth()->user()->role == 'guru' || auth()->user()->role == 'admin')
-<div class="mt-8 pt-5 border-t border-gray-100 flex gap-3">
-    <a href="{{ route('erapor.edit', $siswa->id) }}"
-       class="inline-flex items-center gap-2 px-5 py-2.5 bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded-xl shadow transition duration-200 text-sm">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-        </svg>
-        Edit Nilai Rapor
+<div class="mt-8 pt-5 border-t border-gray-100 flex flex-wrap items-center gap-3">
+    <a href="{{ route('erapor.edit', $siswa->uuid ?? $siswa->id) }}"
+       class="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow transition duration-200 text-sm">
+        <i class="fa-solid fa-pen-to-square text-xs"></i>
+        <span>Edit Nilai Rapor</span>
+    </a>
+    <a href="{{ route('erapor.cetak', $siswa->uuid ?? $siswa->id) }}"
+       class="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow transition duration-200 text-sm">
+        <i class="fa-solid fa-print text-xs"></i>
+        <span>Cetak Rapor (PDF)</span>
     </a>
 </div>
 @endif

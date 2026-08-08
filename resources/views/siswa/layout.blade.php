@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Siswa</title>
+    <title>Dashboard Siswa - RA Al Musyaffallah</title>
     @vite('resources/css/app.css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* Smooth sidebar transition */
         #siswa-sidebar {
@@ -31,46 +32,49 @@
                class="fixed md:sticky top-0 left-0 w-64 h-screen bg-gradient-to-b from-[#166534] to-[#14532d] text-white shadow-2xl flex flex-col z-50 -translate-x-full md:translate-x-0">
 
             {{-- Header Sidebar --}}
-            <div class="p-6 border-b border-green-700 flex justify-between items-center">
+            <div class="p-6 border-b border-green-700/60 flex justify-between items-center">
                 <div>
-                    <h1 class="text-xl font-extrabold uppercase tracking-wide">Siswa Panel</h1>
-                    <p class="text-sm opacity-80">RA Al-Musyaffallah</p>
+                    <h1 class="text-lg font-black uppercase tracking-wider text-green-100">Portal Siswa</h1>
+                    <p class="text-xs text-green-300 font-medium">RA Al-Musyaffallah</p>
                 </div>
-                <button onclick="closeSiswaSidebar()" class="md:hidden text-white">✕</button>
+                <button onclick="closeSiswaSidebar()" class="md:hidden text-white hover:text-green-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
             </div>
 
             {{-- Menu --}}
-            <nav class="flex-1 p-4 space-y-3 overflow-y-auto">
+            <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
 
-                <a href="{{ route('siswa.dashboard', $siswa->id) }}"
-                   class="flex items-center gap-3 p-3 rounded-xl hover:bg-white hover:text-green-800 transition duration-300 {{ request()->routeIs('siswa.dashboard') ? 'bg-white text-green-800 font-bold' : 'font-semibold' }}">
-                    <span class="text-xl"></span>
-                    <span>Dashboard</span>
+                <a href="{{ route('siswa.dashboard', $siswa->uuid ?? $siswa->id) }}"
+                   class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition duration-200 {{ request()->routeIs('siswa.dashboard') ? 'bg-white text-green-900 font-bold shadow-md shadow-black/10' : 'text-green-100 hover:bg-white/10 font-medium' }}">
+                    <i class="fa-solid fa-gauge w-5 text-center text-base"></i>
+                    <span class="text-sm">Dashboard</span>
                 </a>
 
-                <a href="{{ route('erapor.hasil', $siswa->id) }}"
-                   class="flex items-center gap-3 p-3 rounded-xl hover:bg-white hover:text-green-800 transition duration-300 {{ request()->routeIs('erapor.hasil') ? 'bg-white text-green-800 font-bold' : 'font-semibold' }}">
-                    <span class="text-xl"></span>
-                    <span>Lihat Rapor</span>
+                <a href="{{ route('erapor.hasil', $siswa->uuid ?? $siswa->id) }}"
+                   class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition duration-200 {{ request()->routeIs('erapor.hasil') ? 'bg-white text-green-900 font-bold shadow-md shadow-black/10' : 'text-green-100 hover:bg-white/10 font-medium' }}">
+                    <i class="fa-solid fa-file-lines w-5 text-center text-base"></i>
+                    <span class="text-sm">Lihat Rapor</span>
                 </a>
 
-                <a href="{{ route('erapor.cetak', $siswa->id) }}"
-                   class="flex items-center gap-3 p-3 rounded-xl hover:bg-white hover:text-green-800 transition duration-300 {{ request()->routeIs('erapor.cetak') ? 'bg-white text-green-800 font-bold' : 'font-semibold' }}">
-                    <span class="text-xl"></span>
-                    <span>Cetak Rapor</span>
+                <a href="{{ route('erapor.cetak', $siswa->uuid ?? $siswa->id) }}"
+                   class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition duration-200 {{ request()->routeIs('erapor.cetak') ? 'bg-white text-green-900 font-bold shadow-md shadow-black/10' : 'text-green-100 hover:bg-white/10 font-medium' }}">
+                    <i class="fa-solid fa-print w-5 text-center text-base"></i>
+                    <span class="text-sm">Unduh / Cetak PDF</span>
                 </a>
 
             </nav>
 
-             {{-- LOGOUT (FIX DI BAWAH) --}}
-    <div class="p-4 border-t border-green-300 bg-green-600/30">
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button class="w-full bg-white text-green-600 font-bold py-2 rounded-xl hover:bg-gray-200 transition">
-                Logout
-            </button>
-        </form>
-    </div>
+            {{-- LOGOUT --}}
+            <div class="p-4 border-t border-green-700/60 bg-green-950/20">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="w-full bg-white/15 hover:bg-red-600 text-white font-bold py-2.5 px-4 rounded-xl transition flex items-center justify-center gap-2 text-xs">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>Keluar Akun</span>
+                    </button>
+                </form>
+            </div>
 
         </aside>
 

@@ -29,7 +29,7 @@ class SiswaController extends Controller
                 return redirect()->route('login')->with('error', 'Data profil siswa Anda belum terdaftar. Silakan hubungi admin sekolah!');
             }
         } else {
-            $siswa = $id ? Siswa::findOrFail($id) : Siswa::first();
+            $siswa = $id ? Siswa::findByIdentifierOrFail($id) : Siswa::first();
         }
 
         return view('siswa.dashboard', compact('siswa'));
@@ -87,7 +87,7 @@ class SiswaController extends Controller
 
     public function edit($id)
     {
-        $siswa = Siswa::findOrFail($id);
+        $siswa = Siswa::findByIdentifierOrFail($id);
         $kelas = Kelas::all();
 
         return view('admin.siswa-edit', compact('siswa', 'kelas'));
@@ -95,7 +95,7 @@ class SiswaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $siswa = Siswa::findOrFail($id);
+        $siswa = Siswa::findByIdentifierOrFail($id);
 
         $request->validate([
             'nama'            => 'required|string|max:255',
@@ -147,7 +147,7 @@ class SiswaController extends Controller
 
     public function destroy($id)
     {
-        $siswa = Siswa::findOrFail($id);
+        $siswa = Siswa::findByIdentifierOrFail($id);
 
         // Hapus foto jika ada di disk public
         if ($siswa->foto && Storage::disk('public')->exists($siswa->foto)) {
@@ -161,7 +161,7 @@ class SiswaController extends Controller
 
     public function akun($id)
     {
-        $siswa = Siswa::findOrFail($id);
+        $siswa = Siswa::findByIdentifierOrFail($id);
         $user = $siswa->user_id ? User::find($siswa->user_id) : null;
 
         return view('admin.user-create', compact('siswa', 'user'));
@@ -169,7 +169,7 @@ class SiswaController extends Controller
 
     public function updateAkun(Request $request, $id)
     {
-        $siswa = Siswa::findOrFail($id);
+        $siswa = Siswa::findByIdentifierOrFail($id);
 
         $request->validate([
             'name'     => 'required|string|max:255',

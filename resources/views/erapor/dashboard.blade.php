@@ -2,65 +2,151 @@
 
 @section('content')
 
+{{-- Header & Statistik Singkat --}}
 <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
     <div>
-        <h2 class="text-2xl font-bold text-gray-800">
-            Data Rapor Siswa
+        <h2 class="text-2xl font-black text-slate-800">
+            Data E-Rapor Siswa
         </h2>
-        <p class="text-sm text-gray-500 mt-1">
-            Daftar siswa untuk pengisian dan cetak E-Rapor
+        <p class="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">
+            Kelola pengisian capaian pembelajaran, perkembangan P5, PPRA, dan cetak rapor resmi.
         </p>
+    </div>
+    <div class="flex items-center gap-2">
+        <a href="{{ route('erapor.input') }}"
+           class="inline-flex items-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-md shadow-green-600/20 transition">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Input Nilai Baru</span>
+        </a>
     </div>
 </div>
 
-<div class="overflow-x-auto rounded-xl border border-gray-200">
-    <table class="w-full text-sm text-left border-collapse">
-        <thead>
-            <tr class="bg-gray-50 text-gray-700 border-b border-gray-200">
-                <th class="p-4 font-semibold text-center w-16">No</th>
-                <th class="p-4 font-semibold">Nama Siswa</th>
-                <th class="p-4 font-semibold text-center">NIS</th>
-                <th class="p-4 font-semibold text-center">Kelas</th>
-                <th class="p-4 font-semibold text-center w-48">Aksi</th>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100 text-gray-700 bg-white">
-            @foreach($siswas as $i => $siswa)
-            <tr class="hover:bg-gray-50/70 transition">
-                <td class="p-4 text-center font-medium">{{ $i+1 }}</td>
-                <td class="p-4 font-semibold text-gray-900">{{ $siswa->nama }}</td>
-                <td class="p-4 text-center">{{ $siswa->nis }}</td>
-                <td class="p-4 text-center">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
-                        {{ $siswa->kelas->nama_kelas ?? '-' }}
-                    </span>
-                </td>
-                <td class="p-4 text-center">
-                    <div class="flex items-center justify-center gap-2">
-                        {{-- LIHAT --}}
-                        <a href="{{ route('erapor.hasil', $siswa->id) }}"
-                           class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 font-medium rounded-lg text-xs transition duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                            </svg>
-                            Lihat
-                        </a>
+@php
+    $totalSiswa = $siswas->count();
+    $sudahDinilai = $siswas->filter(fn($s) => $s->nilais->count() > 0)->count();
+    $belumDinilai = $totalSiswa - $sudahDinilai;
+@endphp
 
-                        {{-- CETAK --}}
-                        <a href="{{ route('erapor.cetak', $siswa->id) }}"
-                           class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 font-medium rounded-lg text-xs transition duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4"/>
-                            </svg>
-                            Cetak
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+{{-- Stat Cards --}}
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+    <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-users"></i>
+        </div>
+        <div>
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Siswa</span>
+            <h3 class="text-xl font-black text-slate-800 leading-tight">{{ $totalSiswa }}</h3>
+        </div>
+    </div>
+
+    <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div>
+            <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider">Sudah Dinilai</span>
+            <h3 class="text-xl font-black text-emerald-700 leading-tight">{{ $sudahDinilai }}</h3>
+        </div>
+    </div>
+
+    <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-clock"></i>
+        </div>
+        <div>
+            <span class="text-[11px] font-bold text-amber-600 uppercase tracking-wider">Belum Dinilai</span>
+            <h3 class="text-xl font-black text-amber-700 leading-tight">{{ $belumDinilai }}</h3>
+        </div>
+    </div>
+</div>
+
+{{-- Tabel Siswa --}}
+<div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+            <thead>
+                <tr class="bg-slate-50/80 text-slate-600 border-b border-slate-100 text-[11px] uppercase tracking-wider">
+                    <th class="py-3.5 px-4 font-bold text-center w-14">No</th>
+                    <th class="py-3.5 px-4 font-bold">Nama Siswa</th>
+                    <th class="py-3.5 px-4 font-bold text-center">NIS</th>
+                    <th class="py-3.5 px-4 font-bold text-center">Kelas / Rombel</th>
+                    <th class="py-3.5 px-4 font-bold text-center">Status Rapor</th>
+                    <th class="py-3.5 px-4 font-bold text-center w-60">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+                @forelse($siswas as $i => $siswa)
+                @php
+                    $hasNilai = $siswa->nilais->count() > 0;
+                @endphp
+                <tr class="hover:bg-slate-50/60 transition">
+                    <td class="py-3.5 px-4 text-center font-bold text-slate-400">{{ $i+1 }}</td>
+                    <td class="py-3.5 px-4">
+                        <div class="font-bold text-slate-800">{{ $siswa->nama }}</div>
+                        <span class="text-[11px] text-slate-400 font-medium">{{ $siswa->jenis_kelamin ?? 'Peserta Didik' }}</span>
+                    </td>
+                    <td class="py-3.5 px-4 text-center font-mono font-bold text-slate-600">{{ $siswa->nis ?? '-' }}</td>
+                    <td class="py-3.5 px-4 text-center">
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-green-50 text-green-700 border border-green-200">
+                            {{ $siswa->kelas->nama_kelas ?? 'Belum Diatur' }}
+                        </span>
+                    </td>
+                    <td class="py-3.5 px-4 text-center">
+                        @if($hasNilai)
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                <i class="fa-solid fa-circle-check text-[10px]"></i> Sudah Dinilai
+                            </span>
+                        @else
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                                <i class="fa-solid fa-clock text-[10px]"></i> Belum Dinilai
+                            </span>
+                        @endif
+                    </td>
+                    <td class="py-3.5 px-4 text-center">
+                        <div class="flex items-center justify-center gap-1.5">
+                            @if($hasNilai)
+                                {{-- LIHAT --}}
+                                <a href="{{ route('erapor.hasil', $siswa->uuid ?? $siswa->id) }}"
+                                   class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white border border-blue-200 hover:border-blue-600 font-bold rounded-lg text-xs transition">
+                                    <i class="fa-solid fa-eye text-[11px]"></i>
+                                    <span>Lihat</span>
+                                </a>
+
+                                {{-- EDIT --}}
+                                <a href="{{ route('erapor.edit', $siswa->uuid ?? $siswa->id) }}"
+                                   class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-amber-50 hover:bg-amber-600 text-amber-700 hover:text-white border border-amber-200 hover:border-amber-600 font-bold rounded-lg text-xs transition">
+                                    <i class="fa-solid fa-pen text-[11px]"></i>
+                                    <span>Edit</span>
+                                </a>
+
+                                {{-- CETAK PDF --}}
+                                <a href="{{ route('erapor.cetak', $siswa->uuid ?? $siswa->id) }}"
+                                   class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs shadow-sm transition">
+                                    <i class="fa-solid fa-print text-[11px]"></i>
+                                    <span>Cetak</span>
+                                </a>
+                            @else
+                                {{-- INPUT NILAI --}}
+                                <a href="{{ route('erapor.input') }}"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-xs shadow-sm transition">
+                                    <i class="fa-solid fa-pen-to-square text-[11px]"></i>
+                                    <span>Isi Nilai</span>
+                                </a>
+                            @endif
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" class="py-10 text-center text-slate-400 font-medium">
+                        <i class="fa-solid fa-user-graduate text-3xl mb-2 block text-slate-300"></i>
+                        Belum ada data siswa yang terdaftar di kelas ini.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 
 @endsection

@@ -111,6 +111,19 @@
                         <td class="py-3.5 px-4 text-center">
                             <div class="flex items-center justify-center gap-1.5">
                                 
+                                {{-- Tombol Konversi ke Data Siswa --}}
+                                <form action="{{ route('admin.pendaftaran.konversi', $item->id) }}" 
+                                      method="POST"
+                                      onsubmit="return confirm('Konversi calon siswa {{ addslashes($item->nama_anak) }} menjadi data siswa resmi?')">
+                                    @csrf
+                                    <button type="submit" 
+                                            title="Konversi ke Data Siswa Resmi"
+                                            class="px-2 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white flex items-center gap-1 text-[11px] font-bold shadow-sm transition">
+                                        <i class="fa-solid fa-user-plus text-[10px]"></i>
+                                        <span class="hidden sm:inline">Konversi</span>
+                                    </button>
+                                </form>
+
                                 {{-- Tombol Terima --}}
                                 @if($item->status !== 'diterima')
                                 <form action="{{ route('admin.pendaftaran.status', $item->id) }}" method="POST">
