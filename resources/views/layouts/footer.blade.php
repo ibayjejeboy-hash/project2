@@ -144,14 +144,19 @@
                     Kontak & Lokasi
                 </h4>
                 <div class="space-y-3 text-xs sm:text-sm text-gray-400">
-                    <div class="flex items-start gap-3">
-                        <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-green-400 flex-shrink-0 mt-0.5">
+                    <a href="https://maps.app.goo.gl/52Sxtsdwn7vJCGrNA" 
+                       target="_blank" rel="noopener noreferrer"
+                       class="flex items-start gap-3 hover:text-gray-200 transition group">
+                        <div class="w-8 h-8 rounded-lg bg-slate-800 group-hover:bg-emerald-950 flex items-center justify-center text-green-400 flex-shrink-0 mt-0.5 border border-slate-700">
                             <i class="fa-solid fa-location-dot"></i>
                         </div>
                         <p class="leading-relaxed">
                             Jl. PU Rancahan RT 10/02, Desa Gabuswetan, Kec. Gabuswetan, Kab. Indramayu, Jawa Barat 45263
+                            <span class="block text-[11px] text-lime-400 font-semibold mt-0.5 group-hover:underline">
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[9px] mr-1"></i>Buka di Google Maps
+                            </span>
                         </p>
-                    </div>
+                    </a>
 
                     <div class="flex items-center gap-3">
                         <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-green-400 flex-shrink-0">

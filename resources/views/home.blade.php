@@ -462,23 +462,28 @@
 
             {{-- Kartu Peta Google Maps Embed --}}
             <div class="lg:col-span-7 bg-white p-4 rounded-3xl border border-gray-200 shadow-sm flex flex-col">
-                <div class="p-4 flex items-center justify-between">
+                <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
-                        <h4 class="font-black text-gray-900 text-base">Lokasi RA Al Musyaffallah di Peta</h4>
-                        <p class="text-xs text-gray-500">Gabuswetan, Kabupaten Indramayu, Jawa Barat</p>
+                        <h4 class="font-black text-gray-900 text-base flex items-center gap-2">
+                            <i class="fa-solid fa-map-location-dot text-emerald-600"></i>
+                            <span>Lokasi RA Al Musyaffallah di Peta</span>
+                        </h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Musholla / RA Almusyaffallah • Jl. PU Rancahan RT 10/02, Gabuswetan, Indramayu</p>
                     </div>
-                    <a href="https://maps.google.com/?q=Gabuswetan+Indramayu" 
+                    <a href="https://maps.app.goo.gl/52Sxtsdwn7vJCGrNA" 
                        target="_blank" rel="noopener noreferrer"
-                       class="text-xs font-bold text-green-700 hover:text-green-800 bg-green-50 px-3 py-1.5 rounded-lg border border-green-200">
-                        <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Buka Google Maps
+                       class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 px-3.5 py-2 rounded-xl border border-emerald-200 transition shadow-sm w-fit">
+                        <i class="fa-solid fa-diamond-turn-right text-emerald-600"></i>
+                        <span>Petunjuk Arah Maps</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-0.5"></i>
                     </a>
                 </div>
 
                 {{-- Responsive Embed Iframe --}}
-                <div class="w-full flex-1 min-h-[300px] rounded-2xl overflow-hidden border border-gray-200 relative">
+                <div class="w-full flex-1 min-h-[340px] rounded-2xl overflow-hidden border border-gray-200 relative shadow-inner">
                     <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15858.940733857502!2d108.204567!3d-6.428137!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6ec84d85a109bf%3A0x401e8f1fc28c6e0!2sGabuswetan%2C%20Indramayu%20Regency%2C%20West%20Java!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" 
-                        class="w-full h-full min-h-[320px] border-0" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.6739074092497!2d108.08032657499217!3d-6.423845693567151!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6eca9ca7d61773%3A0x2c5b115299156c72!2sMusholla%20%2F%20RA%20Almusyaffallah!5e0!3m2!1sid!2sid!4v1717000000000!5m2!1sid!2sid" 
+                        class="w-full h-full min-h-[340px] border-0" 
                         allowfullscreen="" 
                         loading="lazy" 
                         referrerpolicy="no-referrer-when-downgrade">
