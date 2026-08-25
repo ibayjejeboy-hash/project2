@@ -75,6 +75,8 @@
 
 @yield('content')
 
+<x-chatbot-widget />
+
 @stack('scripts')
 </body>
 </html>

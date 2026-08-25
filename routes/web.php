@@ -13,6 +13,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\ChatbotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +82,10 @@ Route::post('/pendaftaran/store', [PendaftaranController::class, 'store'])->name
 Route::get('/api/provinsi', [WilayahController::class, 'provinsi'])->name('api.provinsi');
 Route::get('/api/kabupaten/{id}', [WilayahController::class, 'kabupaten'])->name('api.kabupaten');
 Route::get('/api/kecamatan/{id}', [WilayahController::class, 'kecamatan'])->name('api.kecamatan');
+
+// Chatbot AI
+Route::post('/chat', [ChatbotController::class, 'chat'])->name('chat');
+
 
 
 // =========================================================================
@@ -160,6 +165,7 @@ Route::middleware(['auth', 'role:admin,guru'])->prefix('erapor')->name('erapor.'
     Route::put('/update/{id}', [EraporController::class, 'update'])->name('update');
     Route::get('/hasil/{id}', [EraporController::class, 'hasil'])->name('hasil');
     Route::get('/cetak/{id}', [EraporController::class, 'cetak'])->name('cetak');
+    Route::post('/generate-narasi', [EraporController::class, 'generateNarasi'])->name('generate-narasi');
 });
 
 

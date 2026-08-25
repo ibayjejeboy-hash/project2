@@ -270,4 +270,52 @@ class EraporController extends Controller
         return redirect()->route('erapor.hasil', $siswa->uuid ?? $siswa->id)
             ->with('success', 'Nilai rapor berhasil diperbarui!');
     }
+
+    public function generateNarasi(Request $request)
+    {
+        $request->validate([
+            'siswa_nama' => 'required|string',
+            'siswa_jk' => 'required|string',
+            'kategori' => 'required|string|in:agama,jati_diri,literasi',
+        ]);
+
+        $prompt = "";
+        $nama = $request->siswa_nama;
+        $jk = strtolower($request->siswa_jk) == 'l' || strtolower($request->siswa_jk) == 'laki-laki' ? 'putra' : 'putri';
+
+        if ($request->kategori === 'agama') {
+            $prompt = "Buatkan satu paragraf narasi rapor TK/RA yang ramah, sopan, dan memotivasi untuk siswa bernama {$nama} ({$jk}) mengenai perkembangan 'Nilai Agama & Budi Pekerti'. Ceritakan bahwa Ananda sudah berkembang sangat baik dalam melafalkan doa, surat pendek, dan adab Islami sehari-hari. Jangan gunakan pembuka atau penutup surat, langsung berikan 1 paragraf narasi rapor. Gunakan kata 'Ananda' untuk merujuk pada siswa.";
+        } elseif ($request->kategori === 'jati_diri') {
+            $prompt = "Buatkan satu paragraf narasi rapor TK/RA yang ramah, sopan, dan memotivasi untuk siswa bernama {$nama} ({$jk}) mengenai perkembangan 'Jati Diri'. Ceritakan bahwa Ananda sudah mandiri, percaya diri, dan bisa bergaul dengan baik bersama teman-teman. Jangan gunakan pembuka atau penutup surat, langsung berikan 1 paragraf narasi rapor. Gunakan kata 'Ananda' untuk merujuk pada siswa.";
+        } else {
+            $prompt = "Buatkan satu paragraf narasi rapor TK/RA yang ramah, sopan, dan memotivasi untuk siswa bernama {$nama} ({$jk}) mengenai perkembangan 'Literasi & STEAM (Matematika)'. Ceritakan bahwa Ananda memiliki rasa ingin tahu tinggi, mulai mengenal huruf dan angka dengan baik, serta aktif dalam kegiatan bereksplorasi. Jangan gunakan pembuka atau penutup surat, langsung berikan 1 paragraf narasi rapor. Gunakan kata 'Ananda' untuk merujuk pada siswa.";
+        }
+
+        $apiKey = config('services.gemini.key');
+        if (!$apiKey) {
+            return response()->json(['error' => 'API Key Gemini belum diatur.'], 500);
+        }
+
+        try {
+            $response = \Illuminate\Support\Facades\Http::post('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' . $apiKey, [
+                'contents' => [
+                    [
+                        'parts' => [
+                            ['text' => $prompt]
+                        ]
+                    ]
+                ]
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                $text = $data['candidates'][0]['content']['parts'][0]['text'] ?? 'Gagal memproses narasi.';
+                return response()->json(['narasi' => trim($text)]);
+            }
+
+            return response()->json(['error' => 'Gagal terhubung ke AI. Error: ' . $response->body()], 500);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan sistem: ' . $e->getMessage()], 500);
+        }
+    }
 }

@@ -113,10 +113,16 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             {{-- AGAMA --}}
             <div class="space-y-2">
-                <label class="block text-sm font-semibold text-gray-700">
-                    Nilai Agama & Budi Pekerti
-                </label>
+                <div class="flex items-center justify-between">
+                    <label class="block text-sm font-semibold text-gray-700">
+                        Nilai Agama & Budi Pekerti
+                    </label>
+                    <button type="button" onclick="generateNarasiAI('agama', this)" class="text-[10px] font-bold bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-2 py-1 rounded shadow flex items-center gap-1 transition">
+                        <i class="fa-solid fa-sparkles"></i> AI
+                    </button>
+                </div>
                 <textarea
+                    id="textarea_agama"
                     name="agama"
                     rows="5"
                     required
@@ -127,10 +133,16 @@
 
             {{-- JATI DIRI --}}
             <div class="space-y-2">
-                <label class="block text-sm font-semibold text-gray-700">
-                    Jati Diri
-                </label>
+                <div class="flex items-center justify-between">
+                    <label class="block text-sm font-semibold text-gray-700">
+                        Jati Diri
+                    </label>
+                    <button type="button" onclick="generateNarasiAI('jati_diri', this)" class="text-[10px] font-bold bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-2 py-1 rounded shadow flex items-center gap-1 transition">
+                        <i class="fa-solid fa-sparkles"></i> AI
+                    </button>
+                </div>
                 <textarea
+                    id="textarea_jati_diri"
                     name="jati_diri"
                     rows="5"
                     required
@@ -141,10 +153,16 @@
 
             {{-- LITERASI --}}
             <div class="space-y-2">
-                <label class="block text-sm font-semibold text-gray-700">
-                    Literasi & Matematika
-                </label>
+                <div class="flex items-center justify-between">
+                    <label class="block text-sm font-semibold text-gray-700">
+                        Literasi & Matematika
+                    </label>
+                    <button type="button" onclick="generateNarasiAI('literasi', this)" class="text-[10px] font-bold bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-2 py-1 rounded shadow flex items-center gap-1 transition">
+                        <i class="fa-solid fa-sparkles"></i> AI
+                    </button>
+                </div>
                 <textarea
+                    id="textarea_literasi"
                     name="literasi"
                     rows="5"
                     required
@@ -414,10 +432,68 @@
     }
 
     function clearModalSiswaSearch() {
-        const input = document.getElementById('searchModalPickerSiswa');
-        input.value = '';
+        document.getElementById('searchModalPickerSiswa').value = '';
         filterModalSiswaCards();
-        input.focus();
+        document.getElementById('searchModalPickerSiswa').focus();
+    }
+
+    async function generateNarasiAI(kategori, btnElement) {
+        const siswaNama = document.getElementById('siswaSelectedNama').innerText.trim();
+        const siswaJkText = document.getElementById('siswaSelectedGender').innerText.trim();
+        
+        if (!siswaNama || siswaNama === 'Nama Siswa' || document.getElementById('selectedSiswaId').value === '') {
+            alert('Silakan "Pilih Peserta Didik" terlebih dahulu di atas sebelum menggunakan fitur AI.');
+            return;
+        }
+
+        const originalBtnHTML = btnElement.innerHTML;
+        btnElement.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading...';
+        btnElement.disabled = true;
+        
+        const textarea = document.getElementById('textarea_' + kategori);
+        textarea.value = 'AI sedang memikirkan narasi yang pas...';
+
+        try {
+            const response = await fetch('{{ route("erapor.generate-narasi") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    siswa_nama: siswaNama,
+                    siswa_jk: siswaJkText,
+                    kategori: kategori
+                })
+            });
+
+            const data = await response.json();
+            
+            if (response.ok) {
+                // Typing effect
+                textarea.value = '';
+                let i = 0;
+                const text = data.narasi;
+                const speed = 10;
+                function typeWriter() {
+                    if (i < text.length) {
+                        textarea.value += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, speed);
+                    }
+                }
+                typeWriter();
+            } else {
+                alert(data.error || 'Terjadi kesalahan saat memanggil AI.');
+                textarea.value = '';
+            }
+        } catch (error) {
+            alert('Koneksi ke server AI terputus.');
+            textarea.value = '';
+        } finally {
+            btnElement.innerHTML = originalBtnHTML;
+            btnElement.disabled = false;
+        }
     }
 
     function filterModalSiswaCards() {
