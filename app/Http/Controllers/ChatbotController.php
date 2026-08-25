@@ -30,8 +30,8 @@ Tugas Anda adalah menjawab pertanyaan pengunjung website mengenai pendaftaran (P
         $userMessage = $request->message;
 
         try {
-            // Using Gemini 1.5 Flash which supports system instructions
-            $response = Http::post('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' . $apiKey, [
+            // Using Gemini 2.5 Flash
+            $response = Http::post('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . $apiKey, [
                 'system_instruction' => [
                     'parts' => [
                         ['text' => $systemInstruction]
