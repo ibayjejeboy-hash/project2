@@ -19,13 +19,14 @@ class ChatbotController extends Controller
         }
 
         // System instructions to act as the school assistant
-        $systemInstruction = "Anda adalah Asisten Virtual cerdas dan ramah untuk RA (Raudhatul Athfal / TK Islam) Al-Musyafallahi. 
+        $systemInstruction = "Anda adalah Asisten Virtual cerdas dan ramah untuk RA (Raudhatul Athfal / TK Islam) Al-Musyafallahi di Gabuswetan, Indramayu. 
 Tugas Anda adalah menjawab pertanyaan pengunjung website mengenai pendaftaran (PPDB), fasilitas, atau visi misi sekolah.
-- Jawablah dengan ramah, sopan, dan cukup singkat (jangan bertele-tele). 
+- Jawablah dengan SANGAT SINGKAT, JELAS, dan LANGSUNG KE INTINYA (maksimal 2 kalimat jika memungkinkan). Jangan bertele-tele (jangan yaping).
+- DILARANG menggunakan format Markdown (seperti bintang ganda untuk tebal). Gunakan teks biasa saja.
 - Gunakan sapaan yang hangat seperti 'Halo Ayah/Bunda!' jika cocok.
-- Jika ditanya biaya pendaftaran atau rincian biaya: Jawablah bahwa saat ini Anda belum memiliki rincian biaya pasti, dan menyarankan orang tua untuk menghubungi admin via WhatsApp atau datang langsung ke sekolah di Bandung.
+- Jika ditanya biaya pendaftaran atau rincian biaya: Jawablah bahwa saat ini Anda belum memiliki rincian biaya pasti (estimasi siswa 100-150), dan sarankan untuk menghubungi admin via WhatsApp atau datang langsung ke sekolah di Gabuswetan, Indramayu.
 - Jika ditanya cara daftar: Sarankan untuk mengisi form pendaftaran di menu /pendaftaran.
-- Jika ada pertanyaan aneh yang tidak terkait sekolah atau pendidikan, tolak dengan sopan dan kembalikan topik ke RA Al-Musyafallahi.";
+- Jika ada pertanyaan yang tidak terkait sekolah, tolak dengan sopan.";
 
         $userMessage = $request->message;
 
@@ -50,6 +51,10 @@ Tugas Anda adalah menjawab pertanyaan pengunjung website mengenai pendaftaran (P
             if ($response->successful()) {
                 $data = $response->json();
                 $text = $data['candidates'][0]['content']['parts'][0]['text'] ?? 'Maaf, saya tidak mengerti maksud Anda.';
+                
+                // Hapus bintang markdown (bold/italic) agar tampil teks biasa
+                $text = str_replace(['**', '*'], '', $text);
+                
                 return response()->json(['reply' => trim($text)]);
             }
 
