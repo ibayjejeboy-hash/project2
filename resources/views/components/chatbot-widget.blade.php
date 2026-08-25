@@ -6,10 +6,10 @@
     </button>
 
     {{-- Chat Window --}}
-    <div id="chatbot-window" class="hidden absolute bottom-16 right-0 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden transition-all duration-300 opacity-0 translate-y-4">
+    <div id="chatbot-window" class="hidden absolute bottom-16 right-0 w-[85vw] sm:w-96 bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden transition-all duration-300 opacity-0 translate-y-4 max-h-[75vh]">
         
         {{-- Header --}}
-        <div class="bg-gradient-to-r from-green-500 to-emerald-600 p-4 text-white flex items-center justify-between">
+        <div class="bg-gradient-to-r from-green-500 to-emerald-600 p-4 text-white flex items-center justify-between shrink-0">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                     <i class="fa-solid fa-robot text-xl"></i>
@@ -21,26 +21,23 @@
                     </p>
                 </div>
             </div>
-            <button id="chatbot-close" class="text-white/80 hover:text-white p-2">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-        </div>
-
-        {{-- Messages Area --}}
-        <div id="chatbot-messages" class="flex-1 p-4 h-80 overflow-y-auto bg-slate-50 space-y-4 text-sm">
-            {{-- Welcome Message --}}
-            <div class="flex gap-2.5">
-                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-green-500 to-emerald-500 flex items-center justify-center text-white shrink-0 mt-1 shadow-sm">
-                    <i class="fa-solid fa-robot text-[10px]"></i>
-                </div>
-                <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 text-slate-700 max-w-[85%] leading-relaxed">
-                    Halo Ayah/Bunda! 👋<br>Saya adalah Asisten Virtual RA Al-Musyafallahi. Ada yang bisa saya bantu terkait pendaftaran atau info sekolah?
-                </div>
+            <div class="flex items-center gap-1">
+                <button id="chatbot-clear" title="Hapus Obrolan" class="text-white/80 hover:text-white p-2">
+                    <i class="fa-solid fa-trash-can text-sm"></i>
+                </button>
+                <button id="chatbot-close" class="text-white/80 hover:text-white p-2">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
             </div>
         </div>
 
+        {{-- Messages Area --}}
+        <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto bg-slate-50 space-y-4 text-sm h-[350px]">
+            {{-- Messages will be loaded here by JS --}}
+        </div>
+
         {{-- Input Area --}}
-        <div class="p-3 bg-white border-t border-gray-100 flex items-end gap-2 relative">
+        <div class="p-3 bg-white border-t border-gray-100 flex items-end gap-2 relative shrink-0">
             <textarea id="chatbot-input" rows="1" placeholder="Ketik pertanyaan Anda..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 resize-none max-h-24 overflow-y-auto placeholder:text-slate-400"></textarea>
             <button id="chatbot-send" class="w-10 h-10 shrink-0 bg-green-500 hover:bg-green-600 text-white rounded-xl flex items-center justify-center transition shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
                 <i class="fa-solid fa-paper-plane text-xs"></i>
@@ -48,7 +45,7 @@
         </div>
         
         {{-- Footer Branding --}}
-        <div class="text-center py-1.5 bg-slate-50 text-[9px] text-slate-400 font-medium border-t border-gray-100">
+        <div class="text-center py-1.5 bg-slate-50 text-[9px] text-slate-400 font-medium border-t border-gray-100 shrink-0">
             Powered by Google Gemini AI <i class="fa-solid fa-sparkles text-yellow-400"></i>
         </div>
     </div>
@@ -58,10 +55,31 @@
 document.addEventListener('DOMContentLoaded', function() {
     const toggleBtn = document.getElementById('chatbot-toggle');
     const closeBtn = document.getElementById('chatbot-close');
+    const clearBtn = document.getElementById('chatbot-clear');
     const windowEl = document.getElementById('chatbot-window');
     const sendBtn = document.getElementById('chatbot-send');
     const inputEl = document.getElementById('chatbot-input');
     const messagesEl = document.getElementById('chatbot-messages');
+
+    const STORAGE_KEY = 'ra_chatbot_messages';
+    let chatHistory = [];
+
+    // Load Chat History
+    function loadChatHistory() {
+        messagesEl.innerHTML = ''; // Clear container
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            chatHistory = JSON.parse(saved);
+            chatHistory.forEach(msg => {
+                renderMessageDOM(msg.text, msg.sender);
+            });
+        } else {
+            // Default Welcome Message
+            const welcomeText = "Halo Ayah/Bunda! 👋\nSaya adalah Asisten Virtual RA Al-Musyafallahi. Ada yang bisa saya bantu terkait pendaftaran atau info sekolah?";
+            addMessage(welcomeText, 'bot');
+        }
+        scrollToBottom();
+    }
 
     // Toggle Chat Window
     function toggleChat() {
@@ -70,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 windowEl.classList.remove('opacity-0', 'translate-y-4');
                 inputEl.focus();
+                scrollToBottom();
             }, 10);
             toggleBtn.innerHTML = '<i class="fa-solid fa-xmark text-2xl"></i>';
         } else {
@@ -83,6 +102,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     toggleBtn.addEventListener('click', toggleChat);
     closeBtn.addEventListener('click', toggleChat);
+
+    // Clear Chat
+    clearBtn.addEventListener('click', function() {
+        if(confirm('Hapus semua percakapan?')) {
+            localStorage.removeItem(STORAGE_KEY);
+            chatHistory = [];
+            loadChatHistory();
+        }
+    });
 
     // Auto-resize textarea
     inputEl.addEventListener('input', function() {
@@ -122,7 +150,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             
             // Remove typing indicator
-            document.getElementById(typingId).remove();
+            const typingEl = document.getElementById(typingId);
+            if(typingEl) typingEl.remove();
 
             if (response.ok) {
                 addMessage(data.reply, 'bot');
@@ -130,7 +159,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 addMessage('Maaf, saya sedang mengalami kendala jaringan. ' + (data.error || ''), 'bot');
             }
         } catch (error) {
-            document.getElementById(typingId).remove();
+            const typingEl = document.getElementById(typingId);
+            if(typingEl) typingEl.remove();
             addMessage('Maaf, server sedang sibuk atau offline.', 'bot');
         } finally {
             sendBtn.disabled = false;
@@ -149,21 +179,33 @@ document.addEventListener('DOMContentLoaded', function() {
     sendBtn.addEventListener('click', sendMessage);
 
     function addMessage(text, sender) {
+        chatHistory.push({ text: text, sender: sender });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(chatHistory));
+        renderMessageDOM(text, sender);
+    }
+
+    function renderMessageDOM(text, sender) {
         const div = document.createElement('div');
         div.className = 'flex gap-2.5 ' + (sender === 'user' ? 'flex-row-reverse' : '');
         
-        // Escape HTML to prevent XSS
-        const escapedText = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>");
+        // Escape HTML
+        let escapedText = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>");
+        
+        // Buat URL menjadi link clickable (opsional, tapi disarankan)
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        escapedText = escapedText.replace(urlRegex, function(url) {
+            return '<a href="' + url + '" target="_blank" class="underline hover:text-green-200 break-words">' + url + '</a>';
+        });
         
         let avatar = '';
         let bubble = '';
         
         if (sender === 'bot') {
             avatar = `<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-green-500 to-emerald-500 flex items-center justify-center text-white shrink-0 mt-1 shadow-sm"><i class="fa-solid fa-robot text-[10px]"></i></div>`;
-            bubble = `<div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 text-slate-700 max-w-[85%] leading-relaxed">${escapedText}</div>`;
+            bubble = `<div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 text-slate-700 max-w-[85%] leading-relaxed break-words overflow-hidden">${escapedText}</div>`;
         } else {
             avatar = `<div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 shrink-0 mt-1 shadow-sm"><i class="fa-solid fa-user text-[10px]"></i></div>`;
-            bubble = `<div class="bg-gradient-to-r from-green-500 to-emerald-600 p-3 rounded-2xl rounded-tr-none shadow-sm text-white max-w-[85%] leading-relaxed">${escapedText}</div>`;
+            bubble = `<div class="bg-gradient-to-r from-green-500 to-emerald-600 p-3 rounded-2xl rounded-tr-none shadow-sm text-white max-w-[85%] leading-relaxed break-words overflow-hidden">${escapedText}</div>`;
         }
 
         div.innerHTML = avatar + bubble;
@@ -194,5 +236,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function scrollToBottom() {
         messagesEl.scrollTop = messagesEl.scrollHeight;
     }
+
+    // Initialize
+    loadChatHistory();
 });
 </script>
