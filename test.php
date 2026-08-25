@@ -8,9 +8,15 @@ echo "Key: " . substr($key, 0, 5) . "...\n";
 
 $response = Illuminate\Support\Facades\Http::get('https://generativelanguage.googleapis.com/v1beta/models?key=' . $key);
 
-$data = $response->json();
-foreach($data['models'] as $m) {
-    if(strpos($m['name'], 'gemini') !== false) {
-        echo $m['name'] . "\n";
-    }
-}
+$response = Illuminate\Support\Facades\Http::post('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=' . $key, [
+    'contents' => [
+        [
+            'parts' => [
+                ['text' => 'Hello']
+            ]
+        ]
+    ]
+]);
+
+echo "Status: " . $response->status() . "\n";
+echo "Body: " . $response->body() . "\n";
