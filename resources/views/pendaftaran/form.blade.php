@@ -174,7 +174,7 @@
                         <div class="relative">
                             <input type="text" name="whatsapp" required
                                 value="{{ old('whatsapp') }}"
-                                placeholder="Contoh: 081234567890"
+                                placeholder="Contoh: 089524810777"
                                 class="w-full px-4 py-3 pl-10 rounded-xl border border-slate-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none text-xs sm:text-sm font-medium transition">
                             <i class="fa-brands fa-whatsapp text-green-600 absolute left-3.5 top-1/2 -translate-y-1/2 text-base"></i>
                         </div>

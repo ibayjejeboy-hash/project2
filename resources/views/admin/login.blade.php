@@ -237,7 +237,7 @@
                         <span class="text-xs font-semibold text-gray-600">Ingat Saya</span>
                     </label>
 
-                    <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20lupa%20kata%20sandi%20akun%20E-Rapor." 
+                    <a href="https://wa.me/6289524810777?text=Halo%20Admin,%20saya%20lupa%20kata%20sandi%20akun%20E-Rapor." 
                        target="_blank" rel="noopener noreferrer"
                        class="text-xs font-bold text-green-700 hover:text-green-800 hover:underline">
                         Lupa Password?

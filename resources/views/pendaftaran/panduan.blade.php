@@ -60,7 +60,7 @@
                     <h3 class="font-bold text-amber-900 text-sm sm:text-base">Butuh Bantuan Selama Pendaftaran?</h3>
                     <p class="text-xs sm:text-sm text-amber-800 leading-relaxed">
                         Jika menemui kendala teknis dalam pengisian data atau memiliki pertanyaan khusus, silakan hubungi tim panitia PPDB kami via WhatsApp di 
-                        <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" class="font-bold underline">0812-3456-7890</a>.
+                        <a href="https://wa.me/6289524810777" target="_blank" rel="noopener noreferrer" class="font-bold underline">0895-2481-0777</a>.
                     </p>
                 </div>
             </div>
