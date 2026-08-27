@@ -237,7 +237,7 @@
                         <span class="text-xs font-semibold text-gray-600">Ingat Saya</span>
                     </label>
 
-                    <a href="https://wa.me/6289524810777?text=Halo%20Admin,%20saya%20lupa%20kata%20sandi%20akun%20E-Rapor." 
+                    <a href="https://wa.me/6285314006568?text=Halo%20Admin,%20saya%20lupa%20kata%20sandi%20akun%20E-Rapor." 
                        target="_blank" rel="noopener noreferrer"
                        class="text-xs font-bold text-green-700 hover:text-green-800 hover:underline">
                         Lupa Password?
@@ -260,7 +260,7 @@
                 <div class="bg-green-50/70 rounded-xl p-3.5 border border-green-100 flex items-start gap-3">
                     <i class="fa-solid fa-shield-halved text-green-600 text-sm mt-0.5"></i>
                     <p class="text-[11px] text-green-900 leading-relaxed font-medium">
-                        Portal ini digunakan bersama oleh <strong>Administrator</strong>, <strong>Guru Kelas (Ustadzah)</strong>, dan <strong>Wali Siswa</strong>.
+                        Portal ini digunakan bersama oleh <strong>Administrator</strong> dan <strong>Guru Kelas (Ustadzah)</strong>.
                     </p>
                 </div>
             </div>

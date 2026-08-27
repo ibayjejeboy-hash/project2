@@ -52,6 +52,49 @@
             @endforeach
         </div>
 
+        {{-- Info Jadwal & Biaya --}}
+        <div class="mt-10 grid md:grid-cols-2 gap-6">
+            {{-- Kartu Jadwal --}}
+            <div class="bg-blue-50/50 p-6 rounded-2xl border border-blue-100 shadow-sm">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-calendar-day"></i>
+                    </div>
+                    <h3 class="font-black text-blue-900">Jadwal Pendaftaran</h3>
+                </div>
+                <ul class="space-y-2 text-sm text-blue-800 font-medium">
+                    <li class="flex items-center justify-between">
+                        <span>Gelombang 1</span>
+                        <span class="font-bold">1 Maret - 31 Mei</span>
+                    </li>
+                    <li class="flex items-center justify-between border-t border-blue-100/50 pt-2">
+                        <span>Gelombang 2</span>
+                        <span class="font-bold">1 Juni - 31 Juli</span>
+                    </li>
+                </ul>
+                <p class="text-[11px] text-blue-600/80 italic mt-4">* Awal tahun ajaran mengikuti Kaldik Kemenag RI</p>
+            </div>
+
+            {{-- Kartu Biaya --}}
+            <div class="bg-yellow-50/50 p-6 rounded-2xl border border-yellow-100 shadow-sm">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <h3 class="font-black text-yellow-900">Biaya Pendidikan</h3>
+                </div>
+                <div class="text-sm text-yellow-800 font-medium space-y-1">
+                    <p class="flex items-center justify-between">
+                        <span>SPP Bulanan</span>
+                        <span class="font-black text-base text-yellow-900">Rp 25.000</span>
+                    </p>
+                    <p class="text-xs text-yellow-700 leading-relaxed pt-2 border-t border-yellow-100/50 mt-2">
+                        Pendaftaran, Uang Masuk, Buku, dan Seragam sedang dalam proses rekapitulasi. Silakan hubungi admin untuk rincian lengkapnya.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         {{-- Callout Box Bantuan --}}
         <div class="mt-8 bg-amber-50 border-l-4 border-amber-500 rounded-2xl p-6 shadow-sm">
             <div class="flex items-start gap-3">
@@ -60,7 +103,7 @@
                     <h3 class="font-bold text-amber-900 text-sm sm:text-base">Butuh Bantuan Selama Pendaftaran?</h3>
                     <p class="text-xs sm:text-sm text-amber-800 leading-relaxed">
                         Jika menemui kendala teknis dalam pengisian data atau memiliki pertanyaan khusus, silakan hubungi tim panitia PPDB kami via WhatsApp di 
-                        <a href="https://wa.me/6289524810777" target="_blank" rel="noopener noreferrer" class="font-bold underline">0895-2481-0777</a>.
+                        <a href="https://wa.me/6285314006568" target="_blank" rel="noopener noreferrer" class="font-bold underline">0853-1400-6568</a>.
                     </p>
                 </div>
             </div>

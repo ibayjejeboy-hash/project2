@@ -439,11 +439,40 @@
                             </div>
                             <div>
                                 <span class="block text-xs font-bold text-gray-400 uppercase">Layanan Informasi PPDB (WhatsApp):</span>
-                                <a href="https://wa.me/6289524810777?text=Halo%20Admin%20RA%20Al%20Musyaffallah,%20saya%20ingin%20bertanya%20seputar%20pendaftaran%20siswa%20baru." 
+                                <a href="https://wa.me/6285314006568?text=Halo%20Admin%20RA%20Al%20Musyaffallah,%20saya%20ingin%20bertanya%20seputar%20pendaftaran%20siswa%20baru." 
                                    target="_blank" 
                                    class="text-green-600 hover:text-green-700 font-semibold underline-offset-4 hover:underline">
-                                    +62 895-2481-0777 (Chat Admin Ibu Yoyoh)
+                                    +62 853-1400-6568 (Layanan PPDB)
                                 </a>
+                            </div>
+                        </div>
+
+                        {{-- Jadwal PPDB --}}
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center flex-shrink-0 font-bold border border-blue-100">
+                                <i class="fa-solid fa-calendar-day"></i>
+                            </div>
+                            <div>
+                                <span class="block text-xs font-bold text-gray-400 uppercase">Jadwal Pendaftaran:</span>
+                                <ul class="text-gray-800 font-medium leading-relaxed mt-0.5 list-disc ml-4">
+                                    <li><strong>Gelombang 1:</strong> 1 Maret - 31 Mei</li>
+                                    <li><strong>Gelombang 2:</strong> 1 Juni - 31 Juli</li>
+                                </ul>
+                                <span class="text-[11px] text-gray-500 italic mt-1 block">* Awal tahun ajaran baru mengikuti Kaldik Kemenag RI</span>
+                            </div>
+                        </div>
+
+                        {{-- Biaya SPP --}}
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-yellow-50 text-yellow-700 flex items-center justify-center flex-shrink-0 font-bold border border-yellow-100">
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+                            <div>
+                                <span class="block text-xs font-bold text-gray-400 uppercase">Biaya Pendidikan:</span>
+                                <p class="text-gray-800 font-semibold leading-relaxed mt-0.5">
+                                    SPP: Rp 25.000 / Bulan
+                                </p>
+                                <span class="text-[11px] text-gray-500 italic mt-1 block">Untuk rincian biaya pendaftaran & seragam silakan tanyakan via WhatsApp.</span>
                             </div>
                         </div>
                     </div>
@@ -451,7 +480,7 @@
 
                 {{-- Direct WhatsApp Button --}}
                 <div class="pt-4 border-t border-gray-100">
-                    <a href="https://wa.me/6289524810777?text=Assalamu'alaikum%20Admin%20RA%20Al%20Musyaffallah,%20saya%20ingin%20konsultasi%20pendaftaran%20siswa%20baru." 
+                    <a href="https://wa.me/6285314006568?text=Assalamu'alaikum%20Admin%20RA%20Al%20Musyaffallah,%20saya%20ingin%20konsultasi%20pendaftaran%20siswa%20baru." 
                        target="_blank" rel="noopener noreferrer"
                        class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-md hover:shadow-lg transition">
                         <i class="fa-brands fa-whatsapp text-lg"></i>
