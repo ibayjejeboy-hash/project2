@@ -53,6 +53,7 @@
             @endif
         </div>
 
+        @if(($settings['status_ppdb'] ?? 'Buka') == 'Buka')
         <form action="{{ route('pendaftaran.store') }}"
               method="POST"
               class="p-6 sm:p-8 pt-4 space-y-8">
@@ -174,7 +175,7 @@
                         <div class="relative">
                             <input type="text" name="whatsapp" required
                                 value="{{ old('whatsapp') }}"
-                                placeholder="Contoh: 085314006568"
+                                placeholder="Contoh: {{ $settings['kontak_wa'] ?? '085314006568' }}"
                                 class="w-full px-4 py-3 pl-10 rounded-xl border border-slate-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none text-xs sm:text-sm font-medium transition">
                             <i class="fa-brands fa-whatsapp text-green-600 absolute left-3.5 top-1/2 -translate-y-1/2 text-base"></i>
                         </div>
@@ -243,6 +244,16 @@
             </div>
 
         </form>
+        @else
+        <div class="p-12 text-center space-y-4">
+            <div class="w-20 h-20 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-4xl mb-6">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h2 class="text-2xl font-black text-slate-800">Mohon Maaf, Pendaftaran Ditutup</h2>
+            <p class="text-slate-600">Saat ini pendaftaran peserta didik baru (PPDB) belum dibuka atau sudah ditutup. Silakan hubungi admin untuk informasi lebih lanjut.</p>
+            <a href="{{ route('home') }}" class="inline-block mt-4 px-6 py-3 bg-slate-800 text-white font-bold rounded-xl shadow-md hover:bg-slate-900 transition">Kembali ke Beranda</a>
+        </div>
+        @endif
 
     </div>
 

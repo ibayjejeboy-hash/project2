@@ -14,6 +14,7 @@ use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\PengaturanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -141,6 +142,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/galeri', [GaleriController::class, 'store'])->name('galeri.store');
     Route::put('/galeri/{id}', [GaleriController::class, 'update'])->name('galeri.update');
     Route::delete('/galeri/{id}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
+
+    // Pengaturan
+    Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('admin.pengaturan');
+    Route::put('/pengaturan', [PengaturanController::class, 'update'])->name('admin.pengaturan.update');
 
     // Manajemen Informasi Sekolah
     Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi');

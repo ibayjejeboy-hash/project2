@@ -175,6 +175,13 @@
                 <span>Manajemen Akun</span>
             </a>
 
+            {{-- 8. Pengaturan Dinamis Website --}}
+            <a href="{{ route('admin.pengaturan') }}"
+               class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 group {{ request()->routeIs('admin.pengaturan*') ? 'bg-gradient-to-r from-green-600 to-emerald-700 text-white shadow-md shadow-green-900/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                <i class="fa-solid fa-sliders w-5 text-center {{ request()->routeIs('admin.pengaturan*') ? 'text-lime-300' : 'text-slate-400 group-hover:text-lime-400' }}"></i>
+                <span>Pengaturan Website</span>
+            </a>
+
             <div class="px-3 pt-4 pb-1 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">
                 Pusat Bantuan
             </div>

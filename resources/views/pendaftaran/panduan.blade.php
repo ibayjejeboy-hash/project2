@@ -65,11 +65,11 @@
                 <ul class="space-y-2 text-sm text-blue-800 font-medium">
                     <li class="flex items-center justify-between">
                         <span>Gelombang 1</span>
-                        <span class="font-bold">1 Maret - 31 Mei</span>
+                        <span class="font-bold">{{ $settings['jadwal_gelombang_1'] ?? '1 Maret - 31 Mei' }}</span>
                     </li>
                     <li class="flex items-center justify-between border-t border-blue-100/50 pt-2">
                         <span>Gelombang 2</span>
-                        <span class="font-bold">1 Juni - 31 Juli</span>
+                        <span class="font-bold">{{ $settings['jadwal_gelombang_2'] ?? '1 Juni - 31 Juli' }}</span>
                     </li>
                 </ul>
                 <p class="text-[11px] text-blue-600/80 italic mt-4">* Awal tahun ajaran mengikuti Kaldik Kemenag RI</p>
@@ -86,7 +86,7 @@
                 <div class="text-sm text-yellow-800 font-medium space-y-1">
                     <p class="flex items-center justify-between">
                         <span>SPP Bulanan</span>
-                        <span class="font-black text-base text-yellow-900">Rp 25.000</span>
+                        <span class="font-black text-base text-yellow-900">{{ $settings['biaya_spp'] ?? 'Rp 25.000' }}</span>
                     </p>
                     <p class="text-xs text-yellow-700 leading-relaxed pt-2 border-t border-yellow-100/50 mt-2">
                         Pendaftaran, Uang Masuk, Buku, dan Seragam sedang dalam proses rekapitulasi. Silakan hubungi admin untuk rincian lengkapnya.
@@ -103,7 +103,7 @@
                     <h3 class="font-bold text-amber-900 text-sm sm:text-base">Butuh Bantuan Selama Pendaftaran?</h3>
                     <p class="text-xs sm:text-sm text-amber-800 leading-relaxed">
                         Jika menemui kendala teknis dalam pengisian data atau memiliki pertanyaan khusus, silakan hubungi tim panitia PPDB kami via WhatsApp di 
-                        <a href="https://wa.me/6285314006568" target="_blank" rel="noopener noreferrer" class="font-bold underline">0853-1400-6568</a>.
+                        <a href="https://wa.me/62{{ ltrim($settings['kontak_wa'] ?? '85314006568', '0') }}" target="_blank" rel="noopener noreferrer" class="font-bold underline">{{ $settings['kontak_wa_display'] ?? '0853-1400-6568' }}</a>.
                     </p>
                 </div>
             </div>

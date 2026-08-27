@@ -172,11 +172,11 @@
                         <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-green-400 flex-shrink-0">
                             <i class="fa-brands fa-whatsapp text-emerald-400"></i>
                         </div>
-                        <a href="https://wa.me/6285314006568?text=Halo%20Admin%20RA%20Al%20Musyaffallah,%20saya%20ingin%20bertanya%20informasi%20pendaftaran%20siswa%20baru" 
+                        <a href="https://wa.me/62{{ ltrim($settings['kontak_wa'] ?? '85314006568', '0') }}?text=Halo%20Admin%20RA%20Al%20Musyaffallah,%20saya%20ingin%20bertanya%20informasi%20pendaftaran%20siswa%20baru" 
                            target="_blank" 
                            rel="noopener noreferrer" 
                            class="text-emerald-400 hover:text-emerald-300 font-bold underline-offset-2 hover:underline">
-                            WhatsApp Hubungi Kami
+                            {{ $settings['kontak_wa_display'] ?? '+62 853-1400-6568' }}
                         </a>
                     </div>
                 </div>
