@@ -144,8 +144,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::delete('/galeri/{id}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
 
     // Pengaturan
-    Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('admin.pengaturan');
-    Route::put('/pengaturan', [PengaturanController::class, 'update'])->name('admin.pengaturan.update');
+    Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan');
+    Route::put('/pengaturan', [PengaturanController::class, 'update'])->name('pengaturan.update');
 
     // Manajemen Informasi Sekolah
     Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi');
