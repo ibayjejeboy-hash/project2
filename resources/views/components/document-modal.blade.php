@@ -46,13 +46,16 @@
         // If it's a PDF, append toolbar=0
         if(url.toLowerCase().endsWith('.pdf') && !url.includes('#')) {
             url += '#toolbar=0&navpanes=0';
-        } else if (!url.toLowerCase().endsWith('.pdf')) {
-            // For Excel, Word, etc., use Google Docs Viewer (Requires Public URL)
-            // Note: If accessed from localhost/.test domain, Google Viewer won't be able to fetch the file
+        } else if (url.toLowerCase().endsWith('.xlsx') || url.toLowerCase().endsWith('.xls') || url.toLowerCase().endsWith('.docx') || url.toLowerCase().endsWith('.doc')) {
+            // For Excel, Word, etc., use Microsoft Office Viewer (Requires Public URL)
+            // Note: If accessed from localhost/.test domain, Viewer won't be able to fetch the file
             const hostname = window.location.hostname;
             if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname.endsWith('.test') || hostname.endsWith('.local')) {
-                alert("Peringatan: Dokumen Word/Excel menggunakan Google Docs Viewer yang membutuhkan domain publik. Dokumen mungkin tidak tampil saat diuji di Localhost/domain .test, tapi akan berjalan normal di VPS (Production).");
+                alert("Peringatan: Dokumen Word/Excel menggunakan Office Viewer yang membutuhkan domain publik. Dokumen mungkin tidak tampil saat diuji di Localhost/domain .test, tapi akan berjalan normal di VPS (Production).");
             }
+            url = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`;
+        } else {
+            // Fallback to Google Docs Viewer for other types if needed, though MS is preferred for Office files
             url = `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
         }
         
