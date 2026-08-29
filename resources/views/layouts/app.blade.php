@@ -77,6 +77,8 @@
 
 <x-chatbot-widget />
 
+    @include('components.document-modal')
+
 @stack('scripts')
 </body>
 </html>

@@ -24,9 +24,9 @@
                 </p>
 
                 <div class="flex flex-wrap gap-2 pt-1">
-                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-950/80 border border-green-700/50 text-green-300 text-xs font-bold rounded-lg">
+                    <button onclick="openDocumentModal('Sertifikat Akreditasi', '{{ asset('assets/dokumen/SERTIFIKAT AKREDITASI RA AL MUSYAFFALLAH.pdf') }}')" class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-950/80 border border-green-700/50 text-green-300 text-xs font-bold rounded-lg hover:bg-green-900 transition focus:outline-none focus:ring-2 focus:ring-green-400">
                         <i class="fa-solid fa-award text-lime-400"></i> Akreditasi B
-                    </span>
+                    </button>
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-800 border border-slate-700 text-gray-300 text-xs font-semibold rounded-lg">
                         <i class="fa-solid fa-shield-halved text-emerald-400"></i> SK Kemenkumham
                     </span>

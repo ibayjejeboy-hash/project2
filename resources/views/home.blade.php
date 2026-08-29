@@ -86,13 +86,13 @@
 
         {{-- Highlight Stats & Badges Grid --}}
         <div class="mt-14 max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            <div class="bg-white/90 backdrop-blur-sm p-5 rounded-2xl border border-green-100 shadow-sm hover:shadow-md transition text-center group">
+            <button onclick="openDocumentModal('Sertifikat Akreditasi', '{{ asset('assets/dokumen/SERTIFIKAT AKREDITASI RA AL MUSYAFFALLAH.pdf') }}')" class="bg-white/90 backdrop-blur-sm p-5 rounded-2xl border border-green-100 shadow-sm hover:shadow-md transition text-center group cursor-pointer w-full focus:outline-none focus:ring-2 focus:ring-green-400">
                 <div class="w-12 h-12 rounded-xl bg-green-100 text-green-700 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition">
                     <i class="fa-solid fa-award text-xl"></i>
                 </div>
                 <div class="text-xl font-black text-gray-900">Terakreditasi B</div>
                 <p class="text-xs text-gray-500 font-medium mt-0.5">BAN-PAUD / Kemenag</p>
-            </div>
+            </button>
 
             <div class="bg-white/90 backdrop-blur-sm p-5 rounded-2xl border border-green-100 shadow-sm hover:shadow-md transition text-center group">
                 <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition">
