@@ -21,9 +21,6 @@
 
         {{-- Iframe Container --}}
         <div class="flex-1 bg-slate-200 relative w-full h-full overflow-hidden" oncontextmenu="return false;">
-            {{-- Overlay transparent untuk memblokir klik kanan / download --}}
-            <div class="absolute inset-0 z-10 w-full h-full bg-transparent cursor-default"></div>
-            
             <iframe id="document-modal-iframe" 
                     src="" 
                     class="w-full h-full border-0 absolute inset-0 z-0" 
@@ -46,10 +43,19 @@
         titleEl.textContent = title;
         iconEl.className = `fa-solid ${icon} text-xl`;
         
-        // Append #toolbar=0&navpanes=0&scrollbar=0 to PDF URL if not already there
+        // If it's a PDF, append toolbar=0
         if(url.toLowerCase().endsWith('.pdf') && !url.includes('#')) {
-            url += '#toolbar=0&navpanes=0&scrollbar=0';
+            url += '#toolbar=0&navpanes=0';
+        } else if (!url.toLowerCase().endsWith('.pdf')) {
+            // For Excel, Word, etc., use Google Docs Viewer (Requires Public URL)
+            // Note: If accessed from localhost/.test domain, Google Viewer won't be able to fetch the file
+            const hostname = window.location.hostname;
+            if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname.endsWith('.test') || hostname.endsWith('.local')) {
+                alert("Peringatan: Dokumen Word/Excel menggunakan Google Docs Viewer yang membutuhkan domain publik. Dokumen mungkin tidak tampil saat diuji di Localhost/domain .test, tapi akan berjalan normal di VPS (Production).");
+            }
+            url = `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
         }
+        
         iframe.src = url;
 
         // Show Modal

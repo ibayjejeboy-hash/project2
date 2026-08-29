@@ -91,6 +91,16 @@
                     <p class="text-xs text-yellow-700 leading-relaxed pt-2 border-t border-yellow-100/50 mt-2">
                         Pendaftaran, Uang Masuk, Buku, dan Seragam sedang dalam proses rekapitulasi. Silakan hubungi admin untuk rincian lengkapnya.
                     </p>
+                    <div class="pt-3 mt-3 border-t border-yellow-100/50 space-y-2">
+                        <button onclick="openDocumentModal('Brosur PPDB / SPMB', '{{ asset('assets/dokumen/SPMB 2026-2027.xlsx') }}', 'fa-file-excel')" class="w-full flex items-center justify-between bg-white px-3 py-2.5 rounded-xl border border-yellow-200 text-yellow-800 hover:bg-yellow-100 hover:text-yellow-900 transition focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                            <span class="text-xs font-bold"><i class="fa-solid fa-file-excel w-4 text-green-600"></i> Rincian SPMB 2026</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-yellow-600"></i>
+                        </button>
+                        <button onclick="openDocumentModal('Contoh Kartu SPP / Syahriyah', '{{ asset('assets/dokumen/Kartu syahriyah RA AM 2026.docx') }}', 'fa-file-word')" class="w-full flex items-center justify-between bg-white px-3 py-2.5 rounded-xl border border-yellow-200 text-yellow-800 hover:bg-yellow-100 hover:text-yellow-900 transition focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                            <span class="text-xs font-bold"><i class="fa-solid fa-file-word w-4 text-blue-600"></i> Contoh Kartu Syahriyah</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-yellow-600"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
