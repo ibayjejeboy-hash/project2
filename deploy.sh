@@ -57,7 +57,7 @@ docker exec -t eraport-web php artisan storage:link || true
 
 # 6. Ensure APP_KEY exists
 echo "🔑 6. Checking application key..."
-docker exec -t eraport-web php artisan key:generate --force --show || true
+docker exec -t eraport-web php artisan key:generate --force || true
 
 # 7. Run database migrations
 echo "🗄️ 7. Running database migrations inside the container..."
