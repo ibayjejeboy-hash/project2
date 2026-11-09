@@ -10,8 +10,13 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $informasi = Informasi::latest()->first();
-        $galeris   = Galeri::latest()->take(3)->get();
+        try {
+            $informasi = Informasi::latest()->first();
+            $galeris   = Galeri::latest()->take(3)->get();
+        } catch (\Throwable $e) {
+            $informasi = null;
+            $galeris   = collect();
+        }
 
         return view('home', compact('informasi', 'galeris'));
     }

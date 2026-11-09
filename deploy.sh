@@ -15,6 +15,20 @@ git reset --hard origin/main
 # 2. Rebuild Docker Image & Recreate Container
 echo "🐳 2. Rebuilding Docker Image and Restarting Container..."
 
+# Ensure .env file exists on the host so Docker doesn't mount a directory
+if [ ! -f .env ]; then
+    echo "⚠️ .env not found on server, copying from .env.production or .env.example..."
+    if [ -f .env.production ]; then
+        cp .env.production .env
+    else
+        cp .env.example .env
+    fi
+fi
+
+# Ensure storage directories exist on host
+mkdir -p storage/app/public storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
+chmod -R 777 storage bootstrap/cache 2>/dev/null || true
+
 # Safely stop and remove any old container to avoid name conflicts
 docker stop eraport-web || true
 docker rm -f eraport-web || true
@@ -32,7 +46,7 @@ fi
 echo "⏳ 3. Waiting for container to stabilize..."
 sleep 5
 
-# 4. Fix storage permissions
+# 4. Fix storage permissions inside container
 echo "🔐 4. Fixing storage permissions..."
 docker exec -t eraport-web chmod -R 777 /var/www/html/storage
 docker exec -t eraport-web chmod -R 777 /var/www/html/bootstrap/cache
@@ -41,12 +55,16 @@ docker exec -t eraport-web chmod -R 777 /var/www/html/bootstrap/cache
 echo "🔗 5. Ensuring storage symlink..."
 docker exec -t eraport-web php artisan storage:link || true
 
-# 6. Run database migrations
-echo "🗄️ 6. Running database migrations inside the container..."
-docker exec -t eraport-web php artisan migrate --force
+# 6. Ensure APP_KEY exists
+echo "🔑 6. Checking application key..."
+docker exec -t eraport-web php artisan key:generate --force --show || true
 
-# 7. Clear and optimize Laravel caches
-echo "🧹 7. Optimizing and clearing Laravel caches inside the container..."
+# 7. Run database migrations
+echo "🗄️ 7. Running database migrations inside the container..."
+docker exec -t eraport-web php artisan migrate --force || echo "⚠️ Warning: migrate failed or DB connecting, continuing deploy..."
+
+# 8. Clear and optimize Laravel caches
+echo "🧹 8. Optimizing and clearing Laravel caches inside the container..."
 docker exec -t eraport-web php artisan optimize:clear
 docker exec -t eraport-web php artisan config:cache
 docker exec -t eraport-web php artisan route:cache

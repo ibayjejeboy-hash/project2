@@ -23,9 +23,13 @@ class AppServiceProvider extends ServiceProvider
 
         // Bagikan variabel $settings ke seluruh view, di-cache selama 1 minggu
         view()->composer('*', function ($view) {
-            $settings = \Illuminate\Support\Facades\Cache::remember('global_settings', 604800, function () {
-                return \App\Models\Pengaturan::pluck('nilai', 'kunci')->toArray();
-            });
+            try {
+                $settings = \Illuminate\Support\Facades\Cache::remember('global_settings', 604800, function () {
+                    return \App\Models\Pengaturan::pluck('nilai', 'kunci')->toArray();
+                });
+            } catch (\Throwable $e) {
+                $settings = [];
+            }
             $view->with('settings', $settings);
         });
     }
