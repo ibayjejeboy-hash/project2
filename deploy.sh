@@ -5,6 +5,9 @@ set -e
 # Load global environment paths so non-interactive SSH can find docker, git, etc.
 export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
+# Always change to the script's directory
+cd "$(dirname "$0")"
+
 echo "🚀 Starting Auto-Deployment Process for ERAPORT-WEB..."
 
 # 1. Pull the latest code from Git
