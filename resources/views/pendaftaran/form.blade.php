@@ -83,6 +83,30 @@
                             class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none text-xs sm:text-sm font-medium transition">
                     </div>
 
+                    {{-- NIK Anak --}}
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                            NIK Calon Siswa (16 Digit)
+                        </label>
+                        <input type="text" name="nik" maxlength="16"
+                            value="{{ old('nik') }}"
+                            placeholder="Contoh: 321201xxxxxxxxxx"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none text-xs sm:text-sm font-medium transition">
+                        <span class="text-[11px] text-slate-400 font-medium mt-1 block">Nomor NIK anak sesuai Kartu Keluarga (KK)</span>
+                    </div>
+
+                    {{-- Nomor KK --}}
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                            Nomor Kartu Keluarga (No. KK)
+                        </label>
+                        <input type="text" name="no_kk" maxlength="16"
+                            value="{{ old('no_kk') }}"
+                            placeholder="Contoh: 321201xxxxxxxxxx"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none text-xs sm:text-sm font-medium transition">
+                        <span class="text-[11px] text-slate-400 font-medium mt-1 block">Nomor KK yang tertera di bagian atas Kartu Keluarga</span>
+                    </div>
+
                     {{-- Jenis Kelamin --}}
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">
@@ -167,6 +191,29 @@
                             class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none text-xs sm:text-sm font-medium transition">
                     </div>
 
+                    {{-- Nomor KTP / NIK Orang Tua --}}
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                            Nomor KTP / NIK Orang Tua / Wali
+                        </label>
+                        <input type="text" name="ktp" maxlength="16"
+                            value="{{ old('ktp') }}"
+                            placeholder="Contoh: 321201xxxxxxxxxx (16 digit)"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none text-xs sm:text-sm font-medium transition">
+                        <span class="text-[11px] text-slate-400 font-medium mt-1 block">NIK KTP Ayah, Ibu, atau Wali pendaftar</span>
+                    </div>
+
+                    {{-- Pekerjaan Orang Tua --}}
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                            Pekerjaan Orang Tua / Wali
+                        </label>
+                        <input type="text" name="pekerjaan_ortu"
+                            value="{{ old('pekerjaan_ortu') }}"
+                            placeholder="Contoh: Wiraswasta / Petani / PNS / Karyawan"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none text-xs sm:text-sm font-medium transition">
+                    </div>
+
                     {{-- WhatsApp --}}
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">
@@ -224,6 +271,7 @@
                     <strong class="font-bold block text-amber-950">Catatan Penting:</strong>
                     <ul class="list-disc ml-4 space-y-0.5">
                         <li>Pastikan nomor WhatsApp yang didaftarkan aktif untuk menerima pesan konfirmasi.</li>
+                        <li>Pemberitahuan kelengkapan berkas orang tua akan dilakukan via WA setelah proses verifikasi.</li>
                         <li>Berkas fisik (Akta, KK, KTP) dapat diserahkan ke sekretariat RA saat jadwal orientasi / daftar ulang.</li>
                     </ul>
                 </div>

@@ -77,7 +77,7 @@
                     </li>
                     <li class="flex items-start gap-2">
                         <i class="fa-solid fa-check text-green-500 mt-1"></i>
-                        <span>Kurikulum Merdeka PAUD & P5-PPRA</span>
+                        <span>Kurikulum Berbasis Cinta & P5-PPRA</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <i class="fa-solid fa-check text-green-500 mt-1"></i>

@@ -238,7 +238,7 @@
     {{-- JUDUL RAPOR --}}
     <div class="doc-title">
         <h3>LAPORAN CAPAIAN PERKEMBANGAN PESERTA DIDIK</h3>
-        <p>KURIKULUM MERDEKA &bull; RAUDHATUL ATHFAL</p>
+        <p>KURIKULUM Berbasis Cinta &bull; RAUDHATUL ATHFAL</p>
     </div>
 
     {{-- TABEL IDENTITAS SISWA --}}

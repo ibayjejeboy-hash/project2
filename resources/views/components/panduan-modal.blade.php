@@ -93,7 +93,7 @@
                         </div>
                         <div>
                             <h4 class="font-black text-slate-900 text-base">Panduan E-Rapor &amp; Penilaian (Guru / Ustadzah)</h4>
-                            <p class="text-[11px] text-slate-500">Langkah-langkah pengisian capaian pembelajaran dan penilaian kurikulum merdeka PAUD/RA</p>
+                            <p class="text-[11px] text-slate-500">Langkah-langkah pengisian capaian pembelajaran dan penilaian kurikulum Berbasis Cinta/RA</p>
                         </div>
                     </div>
 

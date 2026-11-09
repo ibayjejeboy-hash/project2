@@ -13,10 +13,22 @@ class Pendaftaran extends Model
 
     protected $fillable = [
         'nama_anak',
+        'no_kk',
+        'nik',
+        'jenis_kelamin',
+        'kelompok',
+        'tempat_lahir',
         'tgl_lahir',
         'nama_ortu',
+        'ktp',
+        'pekerjaan_ortu',
         'no_hp',
+        'email',
         'alamat',
         'status',
+    ];
+
+    protected $casts = [
+        'tgl_lahir' => 'date',
     ];
 }

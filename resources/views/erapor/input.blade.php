@@ -295,7 +295,7 @@
                 </div>
                 <div>
                     <h3 class="text-base font-black text-slate-900">Pilih Peserta Didik (Siswa)</h3>
-                    <p class="text-[11px] text-slate-500 font-medium">Pilih siswa yang akan diinput nilai rapor Kurikulum Merdeka</p>
+                    <p class="text-[11px] text-slate-500 font-medium">Pilih siswa yang akan diinput nilai rapor Kurikulum Berbasis Cinta</p>
                 </div>
             </div>
             <button type="button" onclick="closePickerSiswaModal()" class="text-slate-400 hover:text-slate-600 p-2 rounded-xl hover:bg-slate-100 transition">

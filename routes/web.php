@@ -34,6 +34,11 @@ Route::get('/storage/{path}', function ($path) {
     $fullPath = storage_path('app/public/' . $path);
 
     if (!file_exists($fullPath) || is_dir($fullPath)) {
+        $fallback = public_path('assets/galeri/' . basename($path));
+        if (file_exists($fallback) && !is_dir($fallback)) {
+            $mimeType = mime_content_type($fallback) ?: 'application/octet-stream';
+            return response()->file($fallback, ['Content-Type' => $mimeType]);
+        }
         abort(404);
     }
 
@@ -51,10 +56,9 @@ Route::get('/erapor', function () {
     return view('erapor');
 })->name('erapor');
 
-Route::get('/galeri', function () {
-    $galeris = Galeri::latest()->get();
-    return view('galeri', compact('galeris'));
-})->name('galeri');
+Route::get('/galeri', [GaleriController::class, 'publicIndex'])->name('galeri');
+Route::get('/galeri/cetak', [GaleriController::class, 'cetak'])->name('galeri.cetak');
+Route::get('/galeri/{id}/cetak', [GaleriController::class, 'cetakSingle'])->name('galeri.cetak.single');
 
 // Pendaftaran Siswa Baru
 Route::get('/pendaftaran', function () {

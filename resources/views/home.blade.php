@@ -33,7 +33,7 @@
 
             {{-- Subtitle --}}
             <p class="text-base sm:text-lg md:text-xl font-medium text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Lembaga Pendidikan Anak Usia Dini (RA) berciri khas Islam dengan implementasi <strong>Kurikulum Merdeka PAUD</strong> di Gabuswetan, Indramayu.
+                Lembaga Raudhatul Athfal (RA) berciri khas Islam dengan implementasi <strong>Kurikulum Berbasis Cinta (KBC)</strong> di Gabuswetan, Indramayu.
             </p>
 
             {{-- Action Buttons --}}
@@ -106,7 +106,7 @@
                 <div class="w-12 h-12 rounded-xl bg-lime-100 text-lime-700 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition">
                     <i class="fa-solid fa-shapes text-xl"></i>
                 </div>
-                <div class="text-xl font-black text-gray-900">Kurikulum Merdeka</div>
+                <div class="text-xl font-black text-gray-900">Kurikulum Berbasis Cinta (KBC)</div>
                 <p class="text-xs text-gray-500 font-medium mt-0.5">P5 & Nilai PPRA</p>
             </div>
 
@@ -163,7 +163,7 @@
                     <i class="fa-solid fa-puzzle-piece text-2xl"></i>
                 </div>
                 <h3 class="text-lg font-black text-gray-900 mb-2.5 group-hover:text-emerald-700 transition">
-                    Kurikulum Merdeka PAUD
+                    Kurikulum Berbasis Cinta (KBC)
                 </h3>
                 <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
                     Pembelajaran bermakna dengan eksplorasi minat bakat, sentra kreativitas, serta penanaman Profil Pelajar Rahmatan Lil Alamin.

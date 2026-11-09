@@ -29,17 +29,35 @@ class PendaftaranController extends Controller
         // Normalisasi kontak telepon / whatsapp
         $noHp = $request->no_hp ?: $request->whatsapp;
 
+        // Normalisasi tanggal lahir
+        $tglLahir = $request->tgl_lahir ?: $request->tanggal_lahir;
+
+        // Normalisasi pekerjaan orang tua jika dikirim terpisah atau gabungan
+        $pekerjaanOrtu = $request->pekerjaan_ortu;
+        if (!$pekerjaanOrtu && ($request->filled('pekerjaan_ayah') || $request->filled('pekerjaan_ibu'))) {
+            $pJobs = [];
+            if ($request->filled('pekerjaan_ayah')) $pJobs[] = 'Ayah: ' . trim($request->pekerjaan_ayah);
+            if ($request->filled('pekerjaan_ibu'))  $pJobs[] = 'Ibu: ' . trim($request->pekerjaan_ibu);
+            $pekerjaanOrtu = implode(' / ', $pJobs);
+        }
+
         $request->merge([
-            'nama_ortu' => $namaOrtu,
-            'no_hp'     => $noHp,
+            'nama_ortu'      => $namaOrtu,
+            'no_hp'          => $noHp,
+            'tgl_lahir'      => $tglLahir,
+            'pekerjaan_ortu' => $pekerjaanOrtu,
         ]);
 
         $request->validate([
-            'nama_anak' => 'required|string|max:255',
-            'tgl_lahir' => 'required|date',
-            'nama_ortu' => 'required|string|max:255',
-            'no_hp'     => 'required|string|max:25',
-            'alamat'    => 'required|string',
+            'nama_anak'      => 'required|string|max:255',
+            'tgl_lahir'      => 'required|date',
+            'no_kk'          => 'nullable|string|max:30',
+            'nik'            => 'nullable|string|max:30',
+            'ktp'            => 'nullable|string|max:30',
+            'pekerjaan_ortu' => 'nullable|string|max:150',
+            'nama_ortu'      => 'required|string|max:255',
+            'no_hp'          => 'required|string|max:25',
+            'alamat'         => 'required|string',
         ], [
             'nama_anak.required' => 'Nama lengkap anak wajib diisi.',
             'tgl_lahir.required' => 'Tanggal lahir anak wajib diisi.',
@@ -49,12 +67,20 @@ class PendaftaranController extends Controller
         ]);
 
         Pendaftaran::create([
-            'nama_anak' => trim($request->nama_anak),
-            'tgl_lahir' => $request->tgl_lahir,
-            'nama_ortu' => $namaOrtu,
-            'no_hp'     => $noHp,
-            'alamat'    => trim($request->alamat),
-            'status'    => 'pending',
+            'nama_anak'      => trim($request->nama_anak),
+            'no_kk'          => $request->filled('no_kk') ? trim($request->no_kk) : null,
+            'nik'            => $request->filled('nik') ? trim($request->nik) : null,
+            'jenis_kelamin'  => $request->jenis_kelamin,
+            'kelompok'       => $request->kelompok,
+            'tempat_lahir'   => $request->filled('tempat_lahir') ? trim($request->tempat_lahir) : null,
+            'tgl_lahir'      => $tglLahir,
+            'nama_ortu'      => $namaOrtu,
+            'ktp'            => $request->filled('ktp') ? trim($request->ktp) : null,
+            'pekerjaan_ortu' => $pekerjaanOrtu ? trim($pekerjaanOrtu) : null,
+            'no_hp'          => $noHp,
+            'email'          => $request->filled('email') ? trim($request->email) : null,
+            'alamat'         => trim($request->alamat),
+            'status'         => 'pending',
         ]);
 
         return back()->with('success', 'Pendaftaran online atas nama ' . e($request->nama_anak) . ' berhasil dikirim! Panitia PPDB akan segera memverifikasi data dan menghubungi Anda.');
@@ -107,10 +133,14 @@ class PendaftaranController extends Controller
         $siswa = Siswa::create([
             'nama'             => $pendaftaran->nama_anak,
             'nis'              => $newNis,
+            'jenis_kelamin'    => $pendaftaran->jenis_kelamin,
+            'tempat_lahir'     => $pendaftaran->tempat_lahir,
             'tanggal_lahir'    => $pendaftaran->tgl_lahir,
             'nama_ayah'        => $namaAyah,
             'nama_ibu'         => $namaIbu,
+            'pekerjaan_ayah'   => $pendaftaran->pekerjaan_ortu,
             'no_hp'            => $pendaftaran->no_hp,
+            'email'            => $pendaftaran->email,
             'alamat'           => $pendaftaran->alamat,
             'tanggal_diterima' => date('Y-m-d'),
         ]);

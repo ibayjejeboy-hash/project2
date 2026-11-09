@@ -71,12 +71,26 @@
                         </td>
                         <td class="py-3.5 px-4">
                             <span class="block font-bold text-slate-900 text-xs sm:text-sm">{{ $item->nama_anak }}</span>
-                            <span class="block text-[11px] text-slate-400">
-                                Lahir: {{ $item->tgl_lahir ? date('d/m/Y', strtotime($item->tgl_lahir)) : '-' }}
-                            </span>
+                            <div class="mt-1 space-y-0.5 text-[11px] text-slate-500">
+                                <div><i class="fa-regular fa-calendar text-[10px] text-slate-400 mr-1"></i>Lahir: {{ $item->tgl_lahir ? date('d/m/Y', strtotime($item->tgl_lahir)) : '-' }} {{ $item->tempat_lahir ? '('.$item->tempat_lahir.')' : '' }}</div>
+                                @if($item->nik)
+                                <div><span class="font-bold text-slate-600">NIK:</span> {{ $item->nik }}</div>
+                                @endif
+                                @if($item->no_kk)
+                                <div><span class="font-bold text-slate-600">No. KK:</span> {{ $item->no_kk }}</div>
+                                @endif
+                            </div>
                         </td>
-                        <td class="py-3.5 px-4 text-slate-700 font-semibold">
-                            {{ $item->nama_ortu }}
+                        <td class="py-3.5 px-4">
+                            <span class="block text-slate-800 font-semibold text-xs">{{ $item->nama_ortu }}</span>
+                            <div class="mt-1 space-y-0.5 text-[11px] text-slate-500">
+                                @if($item->ktp)
+                                <div><span class="font-bold text-slate-600">KTP/NIK:</span> {{ $item->ktp }}</div>
+                                @endif
+                                @if($item->pekerjaan_ortu)
+                                <div><span class="font-bold text-slate-600">Pekerjaan:</span> {{ $item->pekerjaan_ortu }}</div>
+                                @endif
+                            </div>
                         </td>
                         <td class="py-3.5 px-4">
                             @if($item->no_hp)

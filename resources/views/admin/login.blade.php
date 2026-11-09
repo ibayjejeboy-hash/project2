@@ -68,7 +68,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 <div class="flex items-center gap-2.5 text-xs sm:text-sm text-gray-200 bg-white/5 p-3 rounded-xl border border-white/10 backdrop-blur-sm">
                     <i class="fa-solid fa-circle-check text-lime-400 text-base"></i>
-                    <span>Kurikulum Merdeka PAUD</span>
+                    <span>Kurikulum Berbasis Cinta </span>
                 </div>
                 <div class="flex items-center gap-2.5 text-xs sm:text-sm text-gray-200 bg-white/5 p-3 rounded-xl border border-white/10 backdrop-blur-sm">
                     <i class="fa-solid fa-circle-check text-lime-400 text-base"></i>

@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
         );
 
         // =========================================================================
-        // 3. SEED INDIKATOR KURIKULUM MERDEKA (P5 & PROFIL PPRA)
+        // 3. SEED INDIKATOR KURIKULUM Berbasis Cinta (P5 & PROFIL PPRA)
         // =========================================================================
         $indikators = [
             // P5
@@ -288,7 +288,7 @@ class DatabaseSeeder extends Seeder
             [
                 'visi'      => 'Mewujudkan Generasi Qur\'ani yang Berakhlak Mulia, Cerdas, Kreatif, dan Mandiri Sejak Usia Dini.',
                 'misi'      => "1. Menanamkan nilai-nilai keislaman dan kecintaan terhadap Al-Qur'an sejak usia dini.\n2. Mengembangkan potensi kecerdasan intelektual, emosional, dan spiritual anak secara seimbang.\n3. Membiasakan perilaku mandiri, disiplin, dan berakhlak terpuji dalam kehidupan sehari-hari.\n4. Menyelenggarakan pembelajaran yang aktif, inovatif, kreatif, efektif, dan menyenangkan (PAIKEM).",
-                'deskripsi' => 'Raudhatul Athfal (RA) Al-Musyafallahi berkomitmen menghadirkan pendidikan anak usia dini berkualitas berbasis nilai-nilai Islam dan Kurikulum Merdeka.',
+                'deskripsi' => 'Raudhatul Athfal (RA) Al-Musyafallahi berkomitmen menghadirkan pendidikan anak usia dini berkualitas berbasis nilai-nilai Islam dan Kurikulum Berbasis Cinta.',
                 'foto'      => null,
             ]
         );
@@ -297,13 +297,53 @@ class DatabaseSeeder extends Seeder
         // 7. SEED CONTOH GALERI KEGIATAN
         // =========================================================================
         $galeris = [
-            ['judul' => 'Peringatan Maulid Nabi Muhammad SAW di RA Al-Musyafallahi', 'gambar' => 'galeri/sample1.jpg'],
-            ['judul' => 'Praktik Manasik Haji Cilik RA Al-Musyafallahi', 'gambar' => 'galeri/sample2.jpg'],
-            ['judul' => 'Kegiatan Belajar Sentra Sains dan Motorik Halus', 'gambar' => 'galeri/sample3.jpg'],
+            [
+                'judul'            => 'Peringatan Maulid Nabi Muhammad SAW di RA Al-Musyafallahi',
+                'kategori'         => 'kegiatan_siswa',
+                'deskripsi'        => 'Peserta didik menampilkan hafalan surat pendek, doa harian, dan pertunjukan rebana bernuansa Islami.',
+                'tanggal_kegiatan' => '2026-09-16',
+                'gambar'           => 'galeri/615039461_804345105993667_4050638587420140265_n.jpg',
+            ],
+            [
+                'judul'            => 'Praktik Manasik Haji Cilik RA Al-Musyafallahi',
+                'kategori'         => 'kegiatan_siswa',
+                'deskripsi'        => 'Pembelajaran kontekstual rukun Islam kelima: tawaf, sai, dan wukuf bersama seluruh siswa kelompok A & B.',
+                'tanggal_kegiatan' => '2026-08-20',
+                'gambar'           => 'galeri/616808908_808796745548503_5441157590873989635_n.jpg',
+            ],
+            [
+                'judul'            => 'Kegiatan Belajar Sentra Sains dan Motorik Halus',
+                'kategori'         => 'kegiatan_siswa',
+                'deskripsi'        => 'Eksplorasi sains sederhana dengan plastisin, pencampuran warna alami, dan pembentukan karakter mandiri.',
+                'tanggal_kegiatan' => '2026-08-10',
+                'gambar'           => 'galeri/617325250_811146648646846_4121603236917662579_n.jpg',
+            ],
+            [
+                'judul'            => 'Workshop Implementasi Kurikulum Berbasis Cinta bagi Dewan Guru RA',
+                'kategori'         => 'kegiatan_guru',
+                'deskripsi'        => 'Peningkatan kompetensi pedagogik ustadzah dalam penyusunan modul ajar P5 & Profil Pelajar Rahmatan Lil Alamin.',
+                'tanggal_kegiatan' => '2026-07-28',
+                'gambar'           => 'galeri/615039461_804345105993667_4050638587420140265_n.jpg',
+            ],
+            [
+                'judul'            => 'Rapat Kerja & Koordinasi Evaluasi Pembelajaran Semester',
+                'kategori'         => 'kegiatan_guru',
+                'deskripsi'        => 'Pertemuan berkala seluruh tenaga pendidik dan kependidikan RA Al-Musyafallahi bersama Kepala Madrasah.',
+                'tanggal_kegiatan' => '2026-07-15',
+                'gambar'           => 'galeri/616808908_808796745548503_5441157590873989635_n.jpg',
+            ],
         ];
 
         foreach ($galeris as $g) {
-            Galeri::firstOrCreate(['judul' => $g['judul']], ['gambar' => $g['gambar']]);
+            Galeri::updateOrCreate(
+                ['judul' => $g['judul']],
+                [
+                    'kategori'         => $g['kategori'],
+                    'deskripsi'        => $g['deskripsi'],
+                    'tanggal_kegiatan' => $g['tanggal_kegiatan'],
+                    'gambar'           => $g['gambar'],
+                ]
+            );
         }
 
         // =========================================================================

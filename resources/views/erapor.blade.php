@@ -20,7 +20,7 @@
                 PORTAL E - RAPOR DIGITAL
             </h1>
             <p class="text-sm sm:text-base text-gray-600 font-medium">
-                Tahun Ajaran 2025/2026 • Kurikulum Merdeka PAUD & Nilai P5-PPRA
+                Tahun Ajaran 2025/2026 • Kurikulum Berbasis Cinta & Nilai P5-PPRA
             </p>
             <div class="w-16 h-1 bg-green-600 mx-auto rounded-full mt-3"></div>
         </div>

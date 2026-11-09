@@ -4,7 +4,7 @@
 
 <div class="mb-8 border-b border-gray-100 pb-5">
     <h2 class="text-2xl font-bold text-gray-800">RAPOR SISWA</h2>
-    <p class="text-sm text-gray-500 mt-1">Laporan Hasil Belajar (Rapor) Kurikulum Merdeka</p>
+    <p class="text-sm text-gray-500 mt-1">Laporan Hasil Belajar (Rapor) Kurikulum Berbasis Cinta</p>
 </div>
 
 {{-- DATA IDENTITAS --}}

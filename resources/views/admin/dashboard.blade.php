@@ -312,7 +312,7 @@
                     </div>
                     <div class="flex justify-between">
                         <span class="text-slate-400">Kurikulum:</span>
-                        <strong class="text-white font-bold">Merdeka PAUD</strong>
+                        <strong class="text-white font-bold">Berbasis Cinta</strong>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-slate-400">Tahun Ajaran:</span>
