@@ -63,11 +63,18 @@ docker exec -t eraport-web php artisan key:generate --force || true
 echo "🗄️ 7. Running database migrations inside the container..."
 docker exec -t eraport-web php artisan migrate --force || echo "⚠️ Warning: migrate failed or DB connecting, continuing deploy..."
 
-# 8. Clear and optimize Laravel caches
-echo "🧹 8. Optimizing and clearing Laravel caches inside the container..."
+# 8. Ensure default database seeds
+echo "🌱 8. Ensuring default database seeds..."
+docker exec -t eraport-web php artisan db:seed --force || echo "⚠️ Warning: db:seed failed, continuing..."
+
+# 9. Clear and optimize Laravel caches
+echo "🧹 9. Optimizing and clearing Laravel caches inside the container..."
 docker exec -t eraport-web php artisan optimize:clear
 docker exec -t eraport-web php artisan config:cache
 docker exec -t eraport-web php artisan route:cache
 docker exec -t eraport-web php artisan view:cache
+
+# 10. Clean dangling docker images
+docker image prune -f || true
 
 echo "🎉 Auto-Deployment completed successfully for ERAPORT-WEB!"
