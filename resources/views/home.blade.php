@@ -209,7 +209,7 @@
         {{-- Gambar Guru (Left Column) --}}
         <div class="lg:col-span-5">
             <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white group">
-                <img src="{{ asset('assets/images/Untitled Design - 1 - Edited.png') }}"
+                <img src="{{ asset('assets/images/7f00d771-991f-4768-937a-710b93ccc830') }}"
                      alt="Dewan Guru RA Al Musyaffallah"
                      class="w-full h-[420px] sm:h-[500px] object-cover group-hover:scale-105 transition-transform duration-700">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>
