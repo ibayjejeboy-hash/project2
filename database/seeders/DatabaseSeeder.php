@@ -22,6 +22,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // =========================================================================
+        // 0. SEED PENGATURAN IDENTITAS, KONTAK, DAN PPDB
+        // =========================================================================
+        $this->call(PengaturanSeeder::class);
+
+        // =========================================================================
         // 1. SEED USER ADMIN & GURU
         // =========================================================================
         $admin = User::firstOrCreate(

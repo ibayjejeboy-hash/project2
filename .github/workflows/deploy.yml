@@ -20,7 +20,12 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
+          timeout: 60s
+          command_timeout: 30m
           script: |
+            if [ ! -d "/home/miomideveloper/e-raport-almusyafallahi/.git" ]; then
+              git clone https://github.com/ibayjejeboy-hash/project2.git /home/miomideveloper/e-raport-almusyafallahi
+            fi
             git config --global --add safe.directory /home/miomideveloper/e-raport-almusyafallahi
             cd /home/miomideveloper/e-raport-almusyafallahi
             git fetch --all

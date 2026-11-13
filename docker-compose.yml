@@ -14,12 +14,13 @@ services:
       # Mount environment file to prevent losing settings
       - ./.env:/var/www/html/.env
     networks:
-      - eraport-network
-      # Menghubungkan ke network miomidev untuk akses database miomidev-mysql
-      - miomidev-web_miomidev-network
+      - db_network
+      - npm_network
 
 networks:
-  eraport-network:
-    driver: bridge
-  miomidev-web_miomidev-network:
+  db_network:
     external: true
+    name: bimbelrbs_network
+  npm_network:
+    external: true
+    name: npm_default
