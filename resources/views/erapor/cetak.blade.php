@@ -448,7 +448,7 @@
                 <div class="sign-name">
                     Yoyoh Muasyarotul Muzayyanati S.Pd.I
                 </div>
-                <div class="sign-role">NIP. 19780512 200501 2 004</div>
+                <div class="sign-role"></div>
             </td>
             <td>
                 <div class="sign-title">

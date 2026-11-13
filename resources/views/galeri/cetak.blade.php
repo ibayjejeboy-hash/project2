@@ -375,7 +375,7 @@
                         <strong>Kepala RA Al-Musyafallahi</strong>
                         <div class="sign-space"></div>
                         <div class="sign-name">Yoyoh Muasyarotul Muzayyanati S.Pd.I</div>
-                        <div>NIP. 197805122005012004</div>
+                        <div></div>
                     </td>
                 </tr>
             </table>
