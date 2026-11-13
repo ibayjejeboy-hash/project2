@@ -446,7 +446,7 @@
                     Kepala RA Al-Musyafallahi
                 </div>
                 <div class="sign-name">
-                    Hj. Siti Aminah, S.Pd.I
+                    Yoyoh Muasyarotul Muzayyanati S.Pd.I
                 </div>
                 <div class="sign-role">NIP. 19780512 200501 2 004</div>
             </td>
